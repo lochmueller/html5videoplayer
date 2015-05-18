@@ -16,7 +16,7 @@
 
 <!-- Begin VideoJS -->
 <div class="video-js-box ">
-	<video id="video_{video.uid}" class="video-js vjs-default-skin" width="{f:if(condition:'{settings.ff.videowidth} > 0', then: settings.ff.videowidth, else: video.minWidth)}" height="{f:if(condition:'{settings.ff.videoheight} > 0', then: settings.ff.videoheight, else: video.minHeight)}" preload="{video.preloadvideo}"<f:if condition="{video.autoplayvideo}"> autoplay</f:if><f:if condition="{video.loopvideo}"> loop</f:if><f:if condition="{video.posterimage}"> poster="{video.posterimage}"</f:if><f:if condition="{video.controlsvideo}"> controls</f:if> data-setup='{"techOrder":["youtube","vimeo","html5","flash"], "ytcontrols": true}'>
+	<video id="video_{video.uid}" class="video-js vjs-default-skin" width="{f:if(condition:'{settings.ff.videowidth} > 0', then: settings.ff.videowidth, else: video.minWidth)}" height="{f:if(condition:'{settings.ff.videoheight} > 0', then: settings.ff.videoheight, else: video.minHeight)}" preload="{video.preloadvideo}"<f:if condition="{video.autoplayvideo}"> autoplay</f:if><f:if condition="{video.loopvideo}"> loop</f:if><f:if condition="{video.posterimage}"> poster="{video.posterimage}"</f:if><f:if condition="{video.controlsvideo}"> controls</f:if> data-setup='<![CDATA[{"techOrder":["youtube","vimeo","html5","flash"], "ytcontrols": true}]]>'>
 		<f:if condition="{video.webmsource}"><source src="{video.webmsource}" type="video/webm" /></f:if>
 		<f:if condition="{video.oggsource}"><source src="{video.oggsource}" type="video/ogg" /></f:if>
 		<f:if condition="{video.mp4source}"><source src="{video.mp4source}" type="video/mp4" /></f:if>

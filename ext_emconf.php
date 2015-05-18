@@ -12,7 +12,7 @@
 
 $EM_CONF[$_EXTKEY] = array (
 	'title' => 'HTML5 Video Player',
-	'description' => 'A video extension for TYPO3 built on the VideoJS HTML5 video player library. Allows you to embed video in your website using HTML5 with Flash fallback support for non-HTML5 browsers. Work on VideoJS 4.11.4 and support YouTube and Vimeo video in the same style.',
+	'description' => 'A video extension for TYPO3 built on the VideoJS HTML5 video player library. Allows you to embed video in your website using HTML5 with Flash fallback support for non-HTML5 browsers. Work on VideoJS 4.12.6 and support YouTube and Vimeo video in the same style.',
 	'category' => 'plugin',
 	'version' => '6.3.1',
 	'state' => 'stable',
