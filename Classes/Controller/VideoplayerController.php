@@ -71,7 +71,7 @@ class VideoplayerController extends ActionController {
 				'output'
 			))
 		) {
-			die('HTML5 Video Player: You have enabled the xhtml_cleaning in your configuration. This will destroy the serialze field in the flash fallback. Please disable the xhtml_cleaning-feature (current value: "' . trim($ts['config.']['xhtml_cleaning']) . '") in the TYPO3 TypoScript configuration.');
+			die('HTML5 Video Player: You have enabled the xhtml_cleaning in your configuration. This will destroy the serialze field in the flash fallback. Please disable the xhtml_cleaning-feature (current value: "' . trim($typoScript['config.']['xhtml_cleaning']) . '") in the TYPO3 TypoScript configuration.');
 		}
 
 		// Check Static include
