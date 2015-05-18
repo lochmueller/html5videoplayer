@@ -1,0 +1,45 @@
+plugin.html5videoplayer {
+
+	# cat=plugin.html5videoplayer//10; type=options[first,random]; label=Gallery Skip overview: Go directly to the first video and skip the overview
+	skipOverview = 0
+
+	# cat=plugin.html5videoplayer//10; type=options[redirect,forward]; label=Gallery Skip overview mode: Forward (incl. no_cache) for the current page, or a redirect
+	skipOverviewMode = redirect
+
+	# cat=plugin.html5videoplayer//15; type=boolean; label=Use VideoJs CDN: Load the required files from the VideoJs CDN Server
+	videoJsCdn = 1
+
+	# cat=plugin.html5videoplayer//20; type=string; label=List thumb width: The width of the thumb in the gally mode (also "200c" is possible)
+	listThumbWidth = 150
+
+	# cat=plugin.html5videoplayer//25; type=string; label=List thumb height: The height of the thumb in the gally mode (also "200c" is possible)
+	listThumbHeight = 50
+
+	# cat=plugin.html5videoplayer//26; type=options[maxWidthAndHeight,normalWidthAndHeight]; label=List thumb mode: maxWidthAndHeight use maxHeight and maxWidth in the templates and normalWidthAndHeight use width and height (for crob functions)
+	listThumbMode = maxWidthAndHeight
+
+	# cat=plugin.html5videoplayer//28; type=int+; label=List thumb Teaser (length): Show the Teaser (if > 0) (description part) of the video. 0 is disabled
+	listThumbTeaser = 0
+
+	# cat=plugin.html5videoplayer/file/25; type=string; label=Resource Folder: Folder for the Resource like JS and CSS. videoJsCdn is preferred.
+	resourceFolder = EXT:html5videoplayer/Resources/Public/
+
+	# cat=plugin.html5videoplayer//30; type=int+; label=Active Video position: The position of the active Video element in the gallery view
+	activePosition = 1
+
+	# cat=plugin.html5videoplayer//30; type=int+; label=Skip the HTML Header: If enabled, no JavaScript and CSS will be automatically included to the pages containing a video.
+	skipHtmlHeaderInformation = 0
+
+	view {
+		 # cat=plugin.html5videoplayer/file; type=string; label=Path to template root (FE)
+		templateRootPath = EXT:html5videoplayer/Resources/Private/Templates/
+		 # cat=plugin.html5videoplayer/file; type=string; label=Path to template partials (FE)
+		partialRootPath = EXT:html5videoplayer/Resources/Private/Partials/
+		 # cat=plugin.html5videoplayer/file; type=string; label=Path to template layouts (FE)
+		layoutRootPath = EXT:html5videoplayer/Resources/Private/Layouts/
+	}
+	persistence {
+		 # cat=plugin.html5videoplayer/config; type=int+; label=Default storage PID
+		storagePid =
+	}
+}

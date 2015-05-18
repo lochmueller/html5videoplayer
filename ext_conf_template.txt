@@ -1,0 +1,8 @@
+# cat=basic/enable; type=int+; label=General Storage Folder : If set, the pid of all video records will be set to this value. You get a general storage folder like a video database. Further more, the plugins change from IRRE to a normal selection from the video DB. This is a usefull option in a multilingual system.
+generalStorageFolder = 0
+
+# cat=basic/enable; type=int+; label=General min width : If there is no with in the plugin nor in the video, the generalMinWith is used
+generalMinWith = 200
+
+# cat=basic/enable; type=int+; label=General min height : If there is no height in the plugin nor in the video, the generalMinHeight is used
+generalMinHeight = 150

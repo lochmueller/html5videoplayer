@@ -1,0 +1,10 @@
+{namespace h5v=HVP\Html5videoplayer\ViewHelpers}
+<f:layout name="Default" />
+
+<f:section name="main">
+	<div class="list">
+		<f:for each="{videos}" as="v">
+			<f:render partial="Videoplayer/Entry" arguments="{video: v}" />
+		</f:for>
+	</div>
+</f:section>

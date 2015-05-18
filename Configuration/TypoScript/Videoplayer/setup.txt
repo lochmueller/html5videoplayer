@@ -1,0 +1,23 @@
+# Plugin configuration
+plugin.tx_html5videoplayer {
+	settings {
+		skipOverview = {$plugin.html5videoplayer.skipOverview}
+		skipOverviewMode = {$plugin.html5videoplayer.skipOverviewMode}
+		videoJsCdn = {$plugin.html5videoplayer.videoJsCdn}
+		listThumbWidth = {$plugin.html5videoplayer.listThumbWidth}
+		listThumbHeight = {$plugin.html5videoplayer.listThumbHeight}
+		listThumbMode = {$plugin.html5videoplayer.listThumbMode}
+		listThumbTeaser = {$plugin.html5videoplayer.listThumbTeaser}
+		resourceFolder = {$plugin.html5videoplayer.resourceFolder}
+		activePosition = {$plugin.html5videoplayer.activePosition}
+		skipHtmlHeaderInformation = {$plugin.html5videoplayer.skipHtmlHeaderInformation}
+	}
+	persistence {
+		storagePid = {$plugin.html5videoplayer.persistence.storagePid}
+	}
+	view {
+		templateRootPath = {$plugin.html5videoplayer.view.templateRootPath}
+		partialRootPath = {$plugin.html5videoplayer.view.partialRootPath}
+		layoutRootPath = {$plugin.html5videoplayer.view.layoutRootPath}
+	}
+}
