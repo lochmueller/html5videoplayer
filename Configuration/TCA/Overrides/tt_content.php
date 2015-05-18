@@ -1,10 +1,7 @@
 <?php
 
-// base
-$tca = $GLOBALS['TCA']['tt_content'];
-
 // column
-$tca['columns']['tx_html5videoplayer_videos'] = array(
+$GLOBALS['TCA']['tt_content']['columns']['tx_html5videoplayer_videos'] = array(
 	'exclude' => 0,
 	'label'   => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:videos',
 	'config'  => array(
@@ -28,19 +25,17 @@ $tca['columns']['tx_html5videoplayer_videos'] = array(
 				'sort',
 				'hide',
 				'delete',
-				'localize'
+				'localize',
 			),
 		),
-	)
+	),
 );
 
 $storageId = \HVP\Html5videoplayer\Div::getGeneralStorageFolder();
 if ($storageId) {
-	unset($tca['columns']['tx_html5videoplayer_videos']['config']['foreign_selector']);
-	unset($tca['columns']['tx_html5videoplayer_videos']['config']['foreign_unique']);
+	unset($GLOBALS['TCA']['tt_content']['columns']['tx_html5videoplayer_videos']['config']['foreign_selector']);
+	unset($GLOBALS['TCA']['tt_content']['columns']['tx_html5videoplayer_videos']['config']['foreign_unique']);
 }
 
-$tca['types']['list']['subtypes_excludelist']['html5videoplayer_pivideoplayer'] = 'layout,select_key,pages,recursive';
-$tca['types']['list']['subtypes_addlist']['html5videoplayer_pivideoplayer'] = 'pi_flexform,tx_html5videoplayer_videos';
-
-return $tca;
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['html5videoplayer_pivideoplayer'] = 'layout,select_key,pages,recursive';
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['html5videoplayer_pivideoplayer'] = 'pi_flexform,tx_html5videoplayer_videos';
