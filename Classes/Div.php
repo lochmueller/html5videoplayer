@@ -35,7 +35,8 @@ class Div {
 			->sql_fetch_assoc($res)) {
 			$pages[] = $row['pid'];
 		}
-		$cache = GeneralUtility::makeInstance('t3lib_TCEmain');
+		/** @var \TYPO3\CMS\Core\DataHandling\DataHandler $cache */
+		$cache = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\DataHandling\\DataHandler');
 		if (!is_object($cache->BE_USER)) {
 			$cache->BE_USER = $GLOBALS['BE_USER'];
 		}

@@ -49,9 +49,9 @@ class Wizicon {
 		$wizardItems['plugins_tx_html5videoplayer_pi1'] = array(
 			'icon'        => ExtensionManagementUtility::extRelPath('html5videoplayer') . '/Resources/Public/Icons/Wizicon.gif',
 			'title'       => $this->getLanguage()
-			                      ->getLLL('list_title', $LL),
+				->getLLL('list_title', $LL),
 			'description' => $this->getLanguage()
-			                      ->getLLL('list_plus_wiz_description', $LL),
+				->getLLL('list_plus_wiz_description', $LL),
 			'params'      => '&defVals[tt_content][CType]=list&defVals[tt_content][list_type]=html5videoplayer_pivideoplayer'
 		);
 
@@ -74,7 +74,8 @@ class Wizicon {
 	 */
 	function includeLocalLang() {
 		$llFile = ExtensionManagementUtility::extPath('html5videoplayer') . '/Resources/Private/Language/locallang.xml';
-		$parser = GeneralUtility::makeInstance('t3lib_l10n_parser_Llxml');
+		/** @var \TYPO3\CMS\Core\Localization\Parser\LocallangXmlParser $parser */
+		$parser = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Localization\\Parser\\LocallangXmlParser');
 		$LOCAL_LANG = $parser->getParsedData($llFile, $GLOBALS['LANG']->lang);
 		return $LOCAL_LANG;
 	}

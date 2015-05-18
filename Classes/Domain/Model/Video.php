@@ -32,7 +32,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
-use TYPO3\CMS\Frontend\MediaWizard\MediaWizardProviderManager;
 
 /**
  * Report Object
@@ -406,8 +405,16 @@ class Video extends AbstractEntity {
 	protected function retrieveMediaUrl($media) {
 		$returnValue = NULL;
 
-		/** @var $mediaWizard \TYPO3\CMS\Frontend\MediaWizard\MediaWizardProviderInterface */
-		$mediaWizard = MediaWizardProviderManager::getValidMediaWizardProvider($media);
+		if (class_exists('TYPO3\\CMS\\Mediace\\MediaWizard\\MediaWizardProviderManager')) {
+			// 7.2
+			$mediaWizard = \TYPO3\CMS\Mediace\MediaWizard\MediaWizardProviderManager::getValidMediaWizardProvider($media);
+		} elseif (class_exists('TYPO3\\CMS\\Frontend\\MediaWizard\\MediaWizardProviderManager')) {
+			// before 7.2
+			$mediaWizard = \TYPO3\CMS\Frontend\MediaWizard\MediaWizardProviderManager::getValidMediaWizardProvider($media);
+		} else {
+			throw new \Exception('You are running TYPO3 > CMS 7.2. Please install the mediace extension', 12367238462384);
+		}
+
 
 		// Get the path relative to the page currently outputted
 		if (substr($media, 0, 5) === "file:") {
@@ -473,7 +480,7 @@ class Video extends AbstractEntity {
 		}
 
 		$default = Div::getConfigurationValue('generalMinWith');
-		return (int)$default ? : 200;
+		return (int)$default ?: 200;
 	}
 
 	/**
@@ -486,7 +493,7 @@ class Video extends AbstractEntity {
 		}
 
 		$default = Div::getConfigurationValue('generalMinHeight');
-		return (int)$default ? : 150;
+		return (int)$default ?: 150;
 	}
 
 }
