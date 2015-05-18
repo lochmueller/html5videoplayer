@@ -58,7 +58,7 @@
             <label index="ff.videowidth">Videobreite (überschreiben)</label>
             <label index="ff.videoheight">Videohöhe (überschreiben)</label>
 			<label index="list_title">HTML5 Video Player</label>			
-			<label index="list_plus_wiz_description">Fügr den HTML5 Video Player hinzu, um Videos aus der Video Datenbank zu zeigen</label>
+			<label index="list_plus_wiz_description">Ermöglicht die Wiedergabe von Playlisten und Videos aus der Videodatenbank mit einem HTML5-Videoplayer.</label>
 			<label index="more.videos">Mehr Videos</label>
 			<label index="back">zurück</label>			
 			<label index="tt_content.list_type_pi1">HTML5 Video Player</label>
