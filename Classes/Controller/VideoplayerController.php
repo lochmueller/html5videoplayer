@@ -31,7 +31,7 @@ class VideoplayerController extends ActionController {
 	/**
 	 * The current Video JS Version
 	 */
-	const VIDEO_JS_VERSION = '4.11.4';
+	const VIDEO_JS_VERSION = '4.12.6';
 
 	/**
 	 * The video repository
@@ -239,9 +239,9 @@ class VideoplayerController extends ActionController {
 
 			$this->addHeader('<link href="' . $css . '" type="text/css" rel="stylesheet" media="screen" />');
 			$this->addHeader('<script src="' . $javaScript . '" type="text/javascript"></script>');
-			$this->addHeader('<script src="' . $folder . 'youtube-2014-12-14.js" type="text/javascript"></script>');
+			$this->addHeader('<script src="' . $folder . 'videojs-youtube-1.2.11/dist/vjs.youtube.js" type="text/javascript"></script>');
 			if (Div::featureEnable('vimeo')) {
-				$this->addHeader('<script src="' . $folder . 'videojs-vimeo-master-patched/src/media.vimeo.js" type="text/javascript"></script>');
+				$this->addHeader('<script src="' . $folder . 'videojs-vimeo-master/src/media.vimeo.js" type="text/javascript"></script>');
 			}
 			if ($swf) {
 				$this->addHeader($swf);
