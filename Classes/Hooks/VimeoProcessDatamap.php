@@ -28,7 +28,7 @@ class VimeoProcessDatamap {
 	function processDatamap_postProcessFieldArray($status, $table, $id, &$fieldArray, &$self) {
 
 		if ($table == 'tx_html5videoplayer_domain_model_video') {
-
+			$dataBeforeChange = array();
 			//Fetch previously saved data to compare with
 			$vimeoUrl = $fieldArray['vimeo'];
 			if ($status == 'update') {
@@ -51,7 +51,7 @@ class VimeoProcessDatamap {
 							$fieldArray['title'] = $videoData['title'];
 						}
 
-						if ((!isset($fieldArray['description']) && $dataBeforeChange['description'] == '') || $fieldArray['description'] == '') {
+						if ((!isset($fieldArray['description']) && $dataBeforeChange['description'] == '')) {
 							$fieldArray['description'] = $videoData['description'];
 						}
 
