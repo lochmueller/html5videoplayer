@@ -232,8 +232,8 @@ class VideoplayerController extends ActionController {
 			$swf = '<script>videojs.options.flash.swf = "' . $folder . 'video-js-' . self::VIDEO_JS_VERSION . '/video-js.swf"</script>';
 
 			if (isset($this->settings['videoJsCdn']) && $this->settings['videoJsCdn']) {
-				$css = 'http://vjs.zencdn.net/' . self::VIDEO_JS_VERSION . '/video-js.css';
-				$javaScript = 'http://vjs.zencdn.net/' . self::VIDEO_JS_VERSION . '/video.js';
+				$css = '//vjs.zencdn.net/' . self::VIDEO_JS_VERSION . '/video-js.css';
+				$javaScript = '//vjs.zencdn.net/' . self::VIDEO_JS_VERSION . '/video.js';
 				$swf = FALSE;
 			}
 
