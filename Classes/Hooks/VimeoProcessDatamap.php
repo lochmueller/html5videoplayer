@@ -28,34 +28,29 @@ class VimeoProcessDatamap {
 	function processDatamap_postProcessFieldArray($status, $table, $id, &$fieldArray, &$self) {
 
 		if ($table == 'tx_html5videoplayer_domain_model_video') {
-			$dataBeforeChange = array();
-			//Fetch previously saved data to compare with
-			$vimeoUrl = $fieldArray['vimeo'];
+			$data = $fieldArray;
 			if ($status == 'update') {
-				$dataBeforeChange = $GLOBALS['TYPO3_DB']->exec_SELECTgetSingleRow('*', 'tx_html5videoplayer_domain_model_video', 'uid=' . (int)$id);
-				if ($vimeoUrl == '') {
-					$vimeoUrl = $dataBeforeChange['vimeo'];
-				}
+				$data = array_merge($GLOBALS['TYPO3_DB']->exec_SELECTgetSingleRow('*', 'tx_html5videoplayer_domain_model_video', 'uid=' . (int)$id), $data);
 			}
-
+			$vimeoUrl = $data['vimeo'];
 			if (($status == 'update' || $status == 'new') && $vimeoUrl != '' && GeneralUtility::isValidUrl($vimeoUrl)) {
 				if (preg_match('/https?:\\/\\/(?:www\\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|)(\d+)(?:$|\/|\?)/i', $vimeoUrl, $matches)) {
 					$videoId = $matches[3];
 					$videoData = unserialize(GeneralUtility::getUrl('http://vimeo.com/api/v2/video/' . $videoId . '.php'));
 
 					if (is_array($videoData)) {
-						//We're only interested in index zero.
+						// We're only interested in index zero.
 						$videoData = $videoData[0];
 
-						if ((!isset($fieldArray['title']) && $dataBeforeChange['title'] == '') || $fieldArray['title'] == '') {
+						if (!isset($data['title']) || trim($data['title']) == '') {
 							$fieldArray['title'] = $videoData['title'];
 						}
 
-						if ((!isset($fieldArray['description']) && $dataBeforeChange['description'] == '')) {
+						if (!isset($data['description']) || trim($data['description']) == '') {
 							$fieldArray['description'] = $videoData['description'];
 						}
 
-						if ((!isset($fieldArray['posterimage']) && $dataBeforeChange['posterimage'] == '') || $fieldArray['posterimage'] == '') {
+						if (!isset($data['posterimage']) || trim($data['posterimage']) == '') {
 							$resourceFactory = ResourceFactory::getInstance();
 							$folder = $resourceFactory->retrieveFileOrFolderObject($this->getUploadFolder());
 							$thumbnailData = GeneralUtility::getUrl($videoData['thumbnail_large']);
