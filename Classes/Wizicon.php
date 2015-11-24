@@ -35,49 +35,59 @@ use TYPO3\CMS\Lang\LanguageService;
  * @package       TYPO3
  * @subpackage    Tx_Html5videoplayer
  */
-class Wizicon {
+class Wizicon
+{
 
-	/**
-	 * Processing the wizard items array
-	 *
-	 * @param    array $wizardItems : The wizard items
-	 *
-	 * @return    array Modified array with wizard items
-	 */
-	function proc($wizardItems) {
-		$LL = $this->includeLocalLang();
-		$wizardItems['plugins_tx_html5videoplayer_pi1'] = array(
-			'icon'        => ExtensionManagementUtility::extRelPath('html5videoplayer') . '/Resources/Public/Icons/Wizicon.gif',
-			'title'       => $this->getLanguage()
-				->getLLL('list_title', $LL),
-			'description' => $this->getLanguage()
-				->getLLL('list_plus_wiz_description', $LL),
-			'params'      => '&defVals[tt_content][CType]=list&defVals[tt_content][list_type]=html5videoplayer_pivideoplayer'
-		);
+    /**
+     * Processing the wizard items array
+     *
+     * @param    array $wizardItems : The wizard items
+     *
+     * @return    array Modified array with wizard items
+     */
+    function proc($wizardItems)
+    {
+        $LL = $this->includeLocalLang();
 
-		return $wizardItems;
-	}
+        $icon = 'EXT:html5videoplayer/Resources/Public/Icons/Wizicon.gif';
+        if (!GeneralUtility::compat_version('7.0')) {
+            $icon = ExtensionManagementUtility::extRelPath('html5videoplayer') . '/Resources/Public/Icons/Wizicon.gif';
+        }
 
-	/**
-	 * Get language service
-	 *
-	 * @return LanguageService
-	 */
-	protected function getLanguage() {
-		return $GLOBALS['LANG'];
-	}
+        $wizardItems['plugins_tx_html5videoplayer_pi1'] = array(
+            'icon' => $icon,
+            'title' => $this->getLanguage()
+                ->getLLL('list_title', $LL),
+            'description' => $this->getLanguage()
+                ->getLLL('list_plus_wiz_description', $LL),
+            'params' => '&defVals[tt_content][CType]=list&defVals[tt_content][list_type]=html5videoplayer_pivideoplayer'
+        );
 
-	/**
-	 * Reads the [extDir]/locallang.xml and returns the $LOCAL_LANG array found in that file.
-	 *
-	 * @return  array   The array with language labels
-	 */
-	function includeLocalLang() {
-		$llFile = ExtensionManagementUtility::extPath('html5videoplayer') . '/Resources/Private/Language/locallang.xml';
-		/** @var \TYPO3\CMS\Core\Localization\Parser\LocallangXmlParser $parser */
-		$parser = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Localization\\Parser\\LocallangXmlParser');
-		$LOCAL_LANG = $parser->getParsedData($llFile, $GLOBALS['LANG']->lang);
-		return $LOCAL_LANG;
-	}
+        return $wizardItems;
+    }
+
+    /**
+     * Get language service
+     *
+     * @return LanguageService
+     */
+    protected function getLanguage()
+    {
+        return $GLOBALS['LANG'];
+    }
+
+    /**
+     * Reads the [extDir]/locallang.xml and returns the $LOCAL_LANG array found in that file.
+     *
+     * @return  array   The array with language labels
+     */
+    function includeLocalLang()
+    {
+        $llFile = ExtensionManagementUtility::extPath('html5videoplayer') . '/Resources/Private/Language/locallang.xml';
+        /** @var \TYPO3\CMS\Core\Localization\Parser\LocallangXmlParser $parser */
+        $parser = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Localization\\Parser\\LocallangXmlParser');
+        $LOCAL_LANG = $parser->getParsedData($llFile, $GLOBALS['LANG']->lang);
+        return $LOCAL_LANG;
+    }
 
 }
