@@ -41,6 +41,7 @@
 			<label index="tx_html5videoplayer_domain_model_video.preloadvideo">Preload Video</label>
 			<label index="tx_html5videoplayer_domain_model_video.autoplayvideo">Autoplay Video</label>
             <label index="tx_html5videoplayer_domain_model_video.loopvideo">Loop Video</label>
+			<label index="tx_html5videoplayer_domain_model_video.video_starttime">Start time of video (in s)</label>
 			<label index="tx_html5videoplayer_domain_model_video.controlsvideo">Video Controls</label>
 		</languageKey>
 		<languageKey index="de" type="array">
@@ -78,6 +79,7 @@
 			<label index="tx_html5videoplayer_domain_model_video.preloadvideo">Preload Video</label>
 			<label index="tx_html5videoplayer_domain_model_video.autoplayvideo">Autoplay Video</label>
             <label index="tx_html5videoplayer_domain_model_video.loopvideo">Loop Video</label>
+            <label index="tx_html5videoplayer_domain_model_video.video_starttime">Startzeit des Videos (in s)</label>
 			<label index="tx_html5videoplayer_domain_model_video.controlsvideo">Video Controls</label>
 		</languageKey>
 	</data>
