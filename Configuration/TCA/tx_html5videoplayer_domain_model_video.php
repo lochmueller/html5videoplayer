@@ -342,6 +342,14 @@ $tca = array(
 				'type' => 'check',
 			)
 		),
+		'video_starttime'        => array(
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:tx_html5videoplayer_domain_model_video.video_starttime',
+			'config'  => array(
+				'type' => 'input',
+                'eval' => 'int'
+			)
+		),
 		'controlsvideo'    => array(
 			'exclude' => 1,
 			'label'   => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:tx_html5videoplayer_domain_model_video.controlsvideo',
@@ -389,7 +397,7 @@ $tca = array(
 		),
 	),
 	'types'     => array(
-		'0' => array('showitem' => '--div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:video,title;;1,width, height,posterimage, mp4source, webmsource, oggsource, youtube,--div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:configurations, downloadlinks, supportvideojs, preloadvideo, autoplayvideo, loopvideo, controlsvideo, --div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:description, description;;;richtext:rte_transform[flag=rte_enabled|mode=ts_css]')
+		'0' => array('showitem' => '--div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:video,title;;1,width, height,posterimage, mp4source, webmsource, oggsource, youtube,--div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:configurations, downloadlinks, supportvideojs, preloadvideo, autoplayvideo, loopvideo, video_starttime, controlsvideo, --div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:description, description;;;richtext:rte_transform[flag=rte_enabled|mode=ts_css]')
 
 	),
 	'palettes'  => array(
@@ -399,7 +407,7 @@ $tca = array(
 );
 
 if (\HVP\Html5videoplayer\Div::featureEnable('vimeo')) {
-	$tca['types']['0'] = array('showitem' => '--div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:video,title;;1,width, height,posterimage, mp4source, webmsource, oggsource, youtube,vimeo,--div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:configurations, downloadlinks, supportvideojs, preloadvideo, autoplayvideo, loopvideo, controlsvideo, --div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:description, description;;;richtext:rte_transform[flag=rte_enabled|mode=ts_css]');
+	$tca['types']['0'] = array('showitem' => '--div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:video,title;;1,width, height,posterimage, mp4source, webmsource, oggsource, youtube,vimeo,--div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:configurations, downloadlinks, supportvideojs, preloadvideo, autoplayvideo, loopvideo, video_starttime, controlsvideo, --div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:description, description;;;richtext:rte_transform[flag=rte_enabled|mode=ts_css]');
 }
 
 return $tca;

@@ -142,6 +142,13 @@ class Video extends AbstractEntity
     protected $loopvideo;
 
     /**
+     * Start time of the video (in s)
+     *
+     * @var integer
+     */
+    protected $videoStarttime;
+
+    /**
      *
      * @var boolean
      */
@@ -371,6 +378,22 @@ class Video extends AbstractEntity
     public function setAutoplayvideo($autoplayvideo)
     {
         $this->autoplayvideo = $autoplayvideo;
+    }
+
+    /**
+     * @return int
+     */
+    public function getVideoStarttime()
+    {
+        return $this->videoStarttime;
+    }
+
+    /**
+     * @param int $videoStarttime
+     */
+    public function setVideoStarttime($videoStarttime)
+    {
+        $this->videoStarttime = $videoStarttime;
     }
 
     /**
