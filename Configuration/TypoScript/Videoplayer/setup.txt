@@ -1,5 +1,6 @@
 # Plugin configuration
 plugin.tx_html5videoplayer {
+
 	settings {
 		skipOverview = {$plugin.html5videoplayer.skipOverview}
 		skipOverviewMode = {$plugin.html5videoplayer.skipOverviewMode}
@@ -12,12 +13,25 @@ plugin.tx_html5videoplayer {
 		activePosition = {$plugin.html5videoplayer.activePosition}
 		skipHtmlHeaderInformation = {$plugin.html5videoplayer.skipHtmlHeaderInformation}
 	}
+
 	persistence {
 		storagePid = {$plugin.html5videoplayer.persistence.storagePid}
 	}
+
 	view {
-		templateRootPath = {$plugin.html5videoplayer.view.templateRootPath}
-		partialRootPath = {$plugin.html5videoplayer.view.partialRootPath}
-		layoutRootPath = {$plugin.html5videoplayer.view.layoutRootPath}
+		templateRootPaths {
+			0 = EXT:html5videoplayer/Resources/Private/Templates/
+			10 = {$plugin.html5videoplayer.view.templateRootPath}
+		}
+
+		partialRootPaths {
+			0 = EXT:html5videoplayer/Resources/Private/Partials/
+			10 = {$plugin.html5videoplayer.view.partialRootPath}
+		}
+
+		layoutRootPaths {
+			0 = EXT:html5videoplayer/Resources/Private/Layouts/
+			10 = {$plugin.html5videoplayer.view.layoutRootPath}
+		}
 	}
 }

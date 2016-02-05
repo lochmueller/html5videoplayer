@@ -1,5 +1,4 @@
 plugin.html5videoplayer {
-
 	# cat=plugin.html5videoplayer//10; type=options[first,random]; label=Gallery Skip overview: Go directly to the first video and skip the overview
 	skipOverview = 0
 
@@ -31,15 +30,16 @@ plugin.html5videoplayer {
 	skipHtmlHeaderInformation = 0
 
 	view {
-		 # cat=plugin.html5videoplayer/file; type=string; label=Path to template root (FE)
+		# cat=plugin.html5videoplayer/file; type=string; label=Path to template root (FE) - Fallback is always html5videoplayer
 		templateRootPath = EXT:html5videoplayer/Resources/Private/Templates/
-		 # cat=plugin.html5videoplayer/file; type=string; label=Path to template partials (FE)
+		# cat=plugin.html5videoplayer/file; type=string; label=Path to template partials (FE) - Fallback is always html5videoplayer
 		partialRootPath = EXT:html5videoplayer/Resources/Private/Partials/
-		 # cat=plugin.html5videoplayer/file; type=string; label=Path to template layouts (FE)
+		# cat=plugin.html5videoplayer/file; type=string; label=Path to template layouts (FE) - Fallback is always html5videoplayer
 		layoutRootPath = EXT:html5videoplayer/Resources/Private/Layouts/
 	}
+
 	persistence {
-		 # cat=plugin.html5videoplayer/config; type=int+; label=Default storage PID
+		# cat=plugin.html5videoplayer/config; type=int+; label=Default storage PID
 		storagePid =
 	}
 }
