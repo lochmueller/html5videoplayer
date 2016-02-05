@@ -54,14 +54,14 @@ class Wizicon
             $icon = ExtensionManagementUtility::extRelPath('html5videoplayer') . '/Resources/Public/Icons/Wizicon.gif';
         }
 
-        $wizardItems['plugins_tx_html5videoplayer_pi1'] = array(
+        $wizardItems['plugins_tx_html5videoplayer_pi1'] = [
             'icon' => $icon,
             'title' => $this->getLanguage()
                 ->getLLL('list_title', $LL),
             'description' => $this->getLanguage()
                 ->getLLL('list_plus_wiz_description', $LL),
             'params' => '&defVals[tt_content][CType]=list&defVals[tt_content][list_type]=html5videoplayer_pivideoplayer'
-        );
+        ];
 
         return $wizardItems;
     }

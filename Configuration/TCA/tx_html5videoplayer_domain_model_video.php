@@ -4,8 +4,8 @@ if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 
-$tca = array(
-    'ctrl'      => array(
+$tca = [
+    'ctrl'      => [
         'title'                    => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:videos',
         'label'                    => 'title',
         'tstamp'                   => 'tstamp',
@@ -17,401 +17,401 @@ $tca = array(
         'sortby'                   => 'sorting',
         'delete'                   => 'deleted',
         'dividers2tabs'            => 1,
-        'enablecolumns'            => array(
+        'enablecolumns'            => [
             'disabled'  => 'hidden',
             'starttime' => 'starttime',
             'endtime'   => 'endtime',
             'fe_group'  => 'fe_group',
-        ),
+        ],
         'iconfile'                 => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('html5videoplayer') . 'Resources/Public/Icons/Video.png',
-    ),
-    'interface' => array(
+    ],
+    'interface' => [
         'showRecordFieldList' => 'sys_language_uid,l10n_parent,l10n_diffsource,hidden,starttime,endtime,fe_group,title,posterimage,mp4source,webmsource,oggsource,height,width,downloadlinks,supportvideojs,preloadvideo,autoplayvideo,loopvideo'
-    ),
-    'columns'   => array(
-        'sys_language_uid' => array(
+    ],
+    'columns'   => [
+        'sys_language_uid' => [
             'exclude' => 1,
             'label'   => 'LLL:EXT:lang/locallang_general.xml:LGL.language',
-            'config'  => array(
+            'config'  => [
                 'type'                => 'select',
                 'renderType'          => 'selectSingleBox',
                 'foreign_table'       => 'sys_language',
                 'foreign_table_where' => 'ORDER BY sys_language.title',
-                'items'               => array(
-                    array(
+                'items'               => [
+                    [
                         'LLL:EXT:lang/locallang_general.xml:LGL.allLanguages',
                         -1
-                    ),
-                    array(
+                    ],
+                    [
                         'LLL:EXT:lang/locallang_general.xml:LGL.default_value',
                         0
-                    )
-                )
-            )
-        ),
-        'l10n_parent'      => array(
+                    ]
+                ]
+            ]
+        ],
+        'l10n_parent'      => [
             'displayCond' => 'FIELD:sys_language_uid:>:0',
             'exclude'     => 1,
             'label'       => 'LLL:EXT:lang/locallang_general.xml:LGL.l18n_parent',
-            'config'      => array(
+            'config'      => [
                 'type'                => 'select',
                 'renderType'          => 'selectSingleBox',
-                'items'               => array(
-                    array(
+                'items'               => [
+                    [
                         '',
                         0
-                    ),
-                ),
+                    ],
+                ],
                 'foreign_table'       => 'tx_html5videoplayer_domain_model_video',
                 'foreign_table_where' => 'AND tx_html5videoplayer_domain_model_video.pid=###CURRENT_PID### AND tx_html5videoplayer_domain_model_video.sys_language_uid IN (-1,0)',
-            )
-        ),
-        'l10n_diffsource'  => array(
-            'config' => array(
+            ]
+        ],
+        'l10n_diffsource'  => [
+            'config' => [
                 'type' => 'passthrough'
-            )
-        ),
-        'hidden'           => array(
+            ]
+        ],
+        'hidden'           => [
             'exclude' => 1,
             'label'   => 'LLL:EXT:lang/locallang_general.xml:LGL.hidden',
-            'config'  => array(
+            'config'  => [
                 'type'    => 'check',
                 'default' => '0'
-            )
-        ),
-        'starttime'        => array(
+            ]
+        ],
+        'starttime'        => [
             'exclude' => 1,
             'label'   => 'LLL:EXT:lang/locallang_general.xml:LGL.starttime',
-            'config'  => array(
+            'config'  => [
                 'type'     => 'input',
                 'size'     => '8',
                 'max'      => '20',
                 'eval'     => 'date',
                 'default'  => '0',
                 'checkbox' => '0'
-            )
-        ),
-        'endtime'          => array(
+            ]
+        ],
+        'endtime'          => [
             'exclude' => 1,
             'label'   => 'LLL:EXT:lang/locallang_general.xml:LGL.endtime',
-            'config'  => array(
+            'config'  => [
                 'type'     => 'input',
                 'size'     => '8',
                 'max'      => '20',
                 'eval'     => 'date',
                 'checkbox' => '0',
                 'default'  => '0',
-                'range'    => array(
+                'range'    => [
                     'upper' => mktime(3, 14, 7, 1, 19, 2038),
                     'lower' => mktime(0, 0, 0, date('m') - 1, date('d'), date('Y'))
-                )
-            )
-        ),
-        'fe_group'         => array(
+                ]
+            ]
+        ],
+        'fe_group'         => [
             'exclude' => 1,
             'label'   => 'LLL:EXT:lang/locallang_general.xml:LGL.fe_group',
-            'config'  => array(
+            'config'  => [
                 'type'          => 'select',
                 'renderType'    => 'selectMultipleSideBySide',
-                'items'         => array(
-                    array(
+                'items'         => [
+                    [
                         '',
                         0
-                    ),
-                    array(
+                    ],
+                    [
                         'LLL:EXT:lang/locallang_general.xml:LGL.hide_at_login',
                         -1
-                    ),
-                    array(
+                    ],
+                    [
                         'LLL:EXT:lang/locallang_general.xml:LGL.any_login',
                         -2
-                    ),
-                    array(
+                    ],
+                    [
                         'LLL:EXT:lang/locallang_general.xml:LGL.usergroups',
                         '--div--'
-                    )
-                ),
+                    ]
+                ],
                 'foreign_table' => 'fe_groups'
-            )
-        ),
-        'title'            => array(
+            ]
+        ],
+        'title'            => [
             'exclude' => 0,
             'label'   => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:tx_html5videoplayer_domain_model_video.title',
-            'config'  => array(
+            'config'  => [
                 'type' => 'input',
                 'size' => '30',
                 // 'eval' => 'required',
-            )
-        ),
-        'posterimage'      => array(
+            ]
+        ],
+        'posterimage'      => [
             'exclude' => 1,
             'label'   => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:tx_html5videoplayer_domain_model_video.posterimage',
-            'config'  => array(
+            'config'  => [
                 'type'     => 'input',
                 'size'     => '100',
                 'max'      => '255',
                 'checkbox' => '',
                 'eval'     => 'trim',
-                'wizards'  => array(
+                'wizards'  => [
                     '_PADDING' => 2,
-                    'link'     => array(
+                    'link'     => [
                         'type'         => 'popup',
                         'title'        => 'Link',
                         'icon'         => 'link_popup.gif',
-                        'module'       => array(
+                        'module'       => [
                             'name'          => 'wizard_element_browser',
-                            'urlParameters' => array(
+                            'urlParameters' => [
                                 'mode' => 'wizard',
                                 'act'  => 'file'
-                            )
-                        ),
+                            ]
+                        ],
                         'JSopenParams' => 'height=300,width=500,status=0,menubar=0,scrollbars=1'
-                    )
-                )
-            )
-        ),
-        'mp4source'        => array(
+                    ]
+                ]
+            ]
+        ],
+        'mp4source'        => [
             'exclude' => 1,
             'label'   => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:tx_html5videoplayer_domain_model_video.mp4source',
-            'config'  => array(
+            'config'  => [
                 'type'     => 'input',
                 'size'     => '100',
                 'max'      => '255',
                 'checkbox' => '',
                 'eval'     => 'trim',
-                'wizards'  => array(
+                'wizards'  => [
                     '_PADDING' => 2,
-                    'link'     => array(
+                    'link'     => [
                         'type'         => 'popup',
                         'title'        => 'Link',
                         'icon'         => 'link_popup.gif',
-                        'module'       => array(
+                        'module'       => [
                             'name'          => 'wizard_element_browser',
-                            'urlParameters' => array(
+                            'urlParameters' => [
                                 'mode' => 'wizard',
                                 'act'  => 'file'
-                            )
-                        ),
+                            ]
+                        ],
                         'JSopenParams' => 'height=300,width=500,status=0,menubar=0,scrollbars=1'
-                    )
-                )
-            )
-        ),
-        'webmsource'       => array(
+                    ]
+                ]
+            ]
+        ],
+        'webmsource'       => [
             'exclude' => 1,
             'label'   => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:tx_html5videoplayer_domain_model_video.webmsource',
-            'config'  => array(
+            'config'  => [
                 'type'     => 'input',
                 'size'     => '100',
                 'max'      => '255',
                 'checkbox' => '',
                 'eval'     => 'trim',
-                'wizards'  => array(
+                'wizards'  => [
                     '_PADDING' => 2,
-                    'link'     => array(
+                    'link'     => [
                         'type'         => 'popup',
                         'title'        => 'Link',
                         'icon'         => 'link_popup.gif',
-                        'module'       => array(
+                        'module'       => [
                             'name'          => 'wizard_element_browser',
-                            'urlParameters' => array(
+                            'urlParameters' => [
                                 'mode' => 'wizard',
                                 'act'  => 'file'
-                            )
-                        ),
+                            ]
+                        ],
                         'JSopenParams' => 'height=300,width=500,status=0,menubar=0,scrollbars=1'
-                    )
-                )
-            )
-        ),
-        'youtube'          => array(
+                    ]
+                ]
+            ]
+        ],
+        'youtube'          => [
             'exclude' => 1,
             'label'   => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:tx_html5videoplayer_domain_model_video.youtube',
-            'config'  => array(
+            'config'  => [
                 'type'     => 'input',
                 'size'     => '100',
                 'max'      => '255',
                 'checkbox' => '',
                 'eval'     => 'trim',
-                'wizards'  => array(
+                'wizards'  => [
                     '_PADDING' => 2,
-                    'link'     => array(
+                    'link'     => [
                         'type'         => 'popup',
                         'title'        => 'Link',
                         'icon'         => 'link_popup.gif',
-                        'module'       => array(
+                        'module'       => [
                             'name'          => 'wizard_element_browser',
-                            'urlParameters' => array(
+                            'urlParameters' => [
                                 'mode' => 'wizard',
                                 'act'  => 'file'
-                            )
-                        ),
+                            ]
+                        ],
                         'JSopenParams' => 'height=300,width=500,status=0,menubar=0,scrollbars=1'
-                    )
-                )
-            )
-        ),
-        'oggsource'        => array(
+                    ]
+                ]
+            ]
+        ],
+        'oggsource'        => [
             'exclude' => 1,
             'label'   => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:tx_html5videoplayer_domain_model_video.oggsource',
-            'config'  => array(
+            'config'  => [
                 'type'     => 'input',
                 'size'     => '100',
                 'max'      => '255',
                 'checkbox' => '',
                 'eval'     => 'trim',
-                'wizards'  => array(
+                'wizards'  => [
                     '_PADDING' => 2,
-                    'link'     => array(
+                    'link'     => [
                         'type'         => 'popup',
                         'title'        => 'Link',
                         'icon'         => 'link_popup.gif',
-                        'module'       => array(
+                        'module'       => [
                             'name'          => 'wizard_element_browser',
-                            'urlParameters' => array(
+                            'urlParameters' => [
                                 'mode' => 'wizard',
                                 'act'  => 'file'
-                            )
-                        ),
+                            ]
+                        ],
                         'JSopenParams' => 'height=300,width=500,status=0,menubar=0,scrollbars=1'
-                    )
-                )
-            )
-        ),
-        'height'           => array(
+                    ]
+                ]
+            ]
+        ],
+        'height'           => [
             'exclude' => 1,
             'label'   => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:tx_html5videoplayer_domain_model_video.height',
-            'config'  => array(
+            'config'  => [
                 'type' => 'input',
                 'size' => '10',
-            )
-        ),
-        'width'            => array(
+            ]
+        ],
+        'width'            => [
             'exclude' => 1,
             'label'   => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:tx_html5videoplayer_domain_model_video.width',
-            'config'  => array(
+            'config'  => [
                 'type' => 'input',
                 'size' => '10',
-            )
-        ),
-        'downloadlinks'    => array(
+            ]
+        ],
+        'downloadlinks'    => [
             'exclude' => 1,
             'label'   => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:tx_html5videoplayer_domain_model_video.downloadlinks',
-            'config'  => array(
+            'config'  => [
                 'type'    => 'check',
                 'default' => 0,
-            )
-        ),
-        'supportvideojs'   => array(
+            ]
+        ],
+        'supportvideojs'   => [
             'exclude' => 1,
             'label'   => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:tx_html5videoplayer_domain_model_video.supportvideojs',
-            'config'  => array(
+            'config'  => [
                 'type'    => 'check',
                 'default' => 0,
-            )
-        ),
-        'preloadvideo'     => array(
+            ]
+        ],
+        'preloadvideo'     => [
             'exclude' => 1,
             'label'   => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:tx_html5videoplayer_domain_model_video.preloadvideo',
-            'config'  => array(
+            'config'  => [
                 'type'  => 'select',
                 'renderType'          => 'selectSingleBox',
-                'items' => array(
-                    array(
+                'items' => [
+                    [
                         'Auto',
                         "auto"
-                    ),
-                    array(
+                    ],
+                    [
                         'metadata',
                         "metadata"
-                    ),
-                    array(
+                    ],
+                    [
                         'None',
                         "none"
-                    ),
-                ),
-            )
-        ),
-        'autoplayvideo'    => array(
+                    ],
+                ],
+            ]
+        ],
+        'autoplayvideo'    => [
             'exclude' => 1,
             'label'   => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:tx_html5videoplayer_domain_model_video.autoplayvideo',
-            'config'  => array(
+            'config'  => [
                 'type' => 'check',
-            )
-        ),
-        'loopvideo'        => array(
+            ]
+        ],
+        'loopvideo'        => [
             'exclude' => 1,
             'label'   => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:tx_html5videoplayer_domain_model_video.loopvideo',
-            'config'  => array(
+            'config'  => [
                 'type' => 'check',
-            )
-        ),
-        'video_starttime'  => array(
+            ]
+        ],
+        'video_starttime'  => [
             'exclude' => 1,
             'label'   => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:tx_html5videoplayer_domain_model_video.video_starttime',
-            'config'  => array(
+            'config'  => [
                 'type' => 'input',
                 'eval' => 'int'
-            )
-        ),
-        'controlsvideo'    => array(
+            ]
+        ],
+        'controlsvideo'    => [
             'exclude' => 1,
             'label'   => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:tx_html5videoplayer_domain_model_video.controlsvideo',
-            'config'  => array(
+            'config'  => [
                 'type'    => 'check',
                 'default' => 1,
-            )
-        ),
-        'description'      => array(
+            ]
+        ],
+        'description'      => [
             'exclude' => 1,
             'label'   => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:description',
-            'config'  => array(
+            'config'  => [
                 'type'    => 'text',
                 'cols'    => '48',
                 'rows'    => '5',
                 'softref' => 'typolink_tag,images,email[subst],url'
-            )
-        ),
-        'vimeo'            => array(
+            ]
+        ],
+        'vimeo'            => [
             'exclude' => 1,
             'label'   => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:tx_html5videoplayer_domain_model_video.vimeo',
-            'config'  => array(
+            'config'  => [
                 'type'     => 'input',
                 'size'     => '100',
                 'max'      => '255',
                 'checkbox' => '',
                 'eval'     => 'trim',
-                'wizards'  => array(
+                'wizards'  => [
                     '_PADDING' => 2,
-                    'link'     => array(
+                    'link'     => [
                         'type'         => 'popup',
                         'title'        => 'Link',
                         'icon'         => 'link_popup.gif',
-                        'module'       => array(
+                        'module'       => [
                             'name'          => 'wizard_element_browser',
-                            'urlParameters' => array(
+                            'urlParameters' => [
                                 'mode' => 'wizard',
                                 'act'  => 'file'
-                            )
-                        ),
+                            ]
+                        ],
                         'JSopenParams' => 'height=300,width=500,status=0,menubar=0,scrollbars=1'
-                    )
-                )
-            ),
-        ),
-    ),
-    'types'     => array(
-        '0' => array('showitem' => '--div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:video,title;;1,width, height,posterimage, mp4source, webmsource, oggsource, youtube,--div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:configurations, downloadlinks, supportvideojs, preloadvideo, autoplayvideo, loopvideo, video_starttime, controlsvideo, --div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:description, description;;;richtext:rte_transform[flag=rte_enabled|mode=ts_css]')
+                    ]
+                ]
+            ],
+        ],
+    ],
+    'types'     => [
+        '0' => ['showitem' => '--div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:video,title;;1,width, height,posterimage, mp4source, webmsource, oggsource, youtube,--div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:configurations, downloadlinks, supportvideojs, preloadvideo, autoplayvideo, loopvideo, video_starttime, controlsvideo, --div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:description, description;;;richtext:rte_transform[flag=rte_enabled|mode=ts_css]']
 
-    ),
-    'palettes'  => array(
-        '1' => array('showitem' => 'hidden,sys_language_uid, l10n_parent, l10n_diffsource,starttime, endtime, fe_group'),
+    ],
+    'palettes'  => [
+        '1' => ['showitem' => 'hidden,sys_language_uid, l10n_parent, l10n_diffsource,starttime, endtime, fe_group'],
 
-    )
-);
+    ]
+];
 
 if (\HVP\Html5videoplayer\Div::featureEnable('vimeo')) {
-    $tca['types']['0'] = array('showitem' => '--div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:video,title;;1,width, height,posterimage, mp4source, webmsource, oggsource, youtube,vimeo,--div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:configurations, downloadlinks, supportvideojs, preloadvideo, autoplayvideo, loopvideo, video_starttime, controlsvideo, --div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:description, description;;;richtext:rte_transform[flag=rte_enabled|mode=ts_css]');
+    $tca['types']['0'] = ['showitem' => '--div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:video,title;;1,width, height,posterimage, mp4source, webmsource, oggsource, youtube,vimeo,--div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:configurations, downloadlinks, supportvideojs, preloadvideo, autoplayvideo, loopvideo, video_starttime, controlsvideo, --div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:description, description;;;richtext:rte_transform[flag=rte_enabled|mode=ts_css]'];
 }
 
 return $tca;

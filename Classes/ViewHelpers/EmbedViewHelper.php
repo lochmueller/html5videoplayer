@@ -29,13 +29,13 @@ class EmbedViewHelper extends AbstractViewHelper {
 	public function render($value, $videowidth, $videoheight, $src, $imgfallback = NULL, $autoplay = FALSE) {
 
 		if ($imgfallback != NULL) {
-			$configuration['playlist'] = array('###IMAGE###');
+			$configuration['playlist'] = ['###IMAGE###'];
 		}
-		$configuration['playlist'][] = array(
+		$configuration['playlist'][] = [
 			'url'           => '###URL###',
 			'autoPlay'      => $autoplay,
 			'autoBuffering' => TRUE,
-		);
+		];
 
 		$json = json_encode($configuration);
 

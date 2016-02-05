@@ -73,9 +73,9 @@ class VimeoProcessDatamap {
 	protected function getUploadFolder() {
 		/** @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $dispatcher */
 		$dispatcher = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\SignalSlot\\Dispatcher');
-		$arguments = array(
+		$arguments = [
 			$this->defaultUploadFolder,
-		);
+		];
 		$arguments = $dispatcher->dispatch(__CLASS__, __METHOD__, $arguments);
 		return $arguments[0];
 	}

@@ -25,13 +25,13 @@ class FlashparamViewHelper extends AbstractViewHelper {
 	 */
 	public function render($value, $imgfallback = "", $autoplay = FALSE) {
 		if ($imgfallback != "") {
-			$configuration['playlist'] = array('###IMAGE###');
+			$configuration['playlist'] = ['###IMAGE###'];
 		}
-		$configuration['playlist'][] = array(
+		$configuration['playlist'][] = [
 			'url'           => '###URL###',
 			'autoPlay'      => $autoplay,
 			'autoBuffering' => TRUE,
-		);
+		];
 
 		if (substr($value, 0, strlen('http')) != "http") {
 			$value = GeneralUtility::getIndpEnv('TYPO3_SITE_URL') . $value;

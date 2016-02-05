@@ -53,7 +53,7 @@ class VideoplayerController extends ActionController {
 	 *
 	 * @var array
 	 */
-	protected $configuration = array();
+	protected $configuration = [];
 
 	/**
 	 * Init the actions
@@ -65,11 +65,11 @@ class VideoplayerController extends ActionController {
 		/** @var \\TYPO3\CMS\Extbase\Configuration\FrontendConfigurationManager $feConfigManager */
 		$feConfigManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Configuration\\FrontendConfigurationManager');
 		$typoScript = $feConfigManager->getTypoScriptSetup();
-		if (isset($typoScript['config.']['xhtml_cleaning']) && in_array(trim($typoScript['config.']['xhtml_cleaning']), array(
+		if (isset($typoScript['config.']['xhtml_cleaning']) && in_array(trim($typoScript['config.']['xhtml_cleaning']), [
 				'all',
 				'cached',
 				'output'
-			))
+			])
 		) {
 			die('HTML5 Video Player: You have enabled the xhtml_cleaning in your configuration. This will destroy the serialze field in the flash fallback. Please disable the xhtml_cleaning-feature (current value: "' . trim($typoScript['config.']['xhtml_cleaning']) . '") in the TYPO3 TypoScript configuration.');
 		}
@@ -86,9 +86,9 @@ class VideoplayerController extends ActionController {
 	public function listAction() {
 		$this->loadHeaderData();
 
-		$variables = array(
+		$variables = [
 			'videos' => $this->getCurrentVideos()
-		);
+		];
 
 		$variables = $this->getSignalSlotDispatcher()
 			->dispatch(__CLASS__, __METHOD__, $variables);
@@ -107,7 +107,7 @@ class VideoplayerController extends ActionController {
 		if (isset($this->settings['videoUids']['_typoScriptNodeValue'])) {
 			$videoUids = $contentObject->cObjGetSingle($this->settings['videoUids']['_typoScriptNodeValue'], $this->settings['videoUids']);
 		}
-		$videos = array();
+		$videos = [];
 		if (!empty($videoUids) && $this->settings['videoUids']) { // TypoScript
 			$videos = $this->videoRepository->findByUids(GeneralUtility::trimExplode(',', $videoUids, TRUE));
 		} elseif (isset($contentElement['uid'])) { // Content Element
@@ -135,7 +135,7 @@ class VideoplayerController extends ActionController {
 					$ident = rand(0, sizeof($videos) - 1);
 				}
 
-				$arguments = array('video' => $videos[$ident]);
+				$arguments = ['video' => $videos[$ident]];
 				$uri = $this->uriBuilder->reset()
 					->setCreateAbsoluteUri(TRUE)
 					->uriFor('detail', $arguments);
@@ -149,9 +149,9 @@ class VideoplayerController extends ActionController {
 			}
 		}
 
-		$variables = array(
+		$variables = [
 			'videos' => $videos
-		);
+		];
 
 		$variables = $this->getSignalSlotDispatcher()
 			->dispatch(__CLASS__, __METHOD__, $variables);
@@ -179,10 +179,10 @@ class VideoplayerController extends ActionController {
 			}
 		}
 
-		$variables = array(
+		$variables = [
 			'videos'       => $videos,
 			'currentVideo' => $video
-		);
+		];
 
 		$variables = $this->getSignalSlotDispatcher()
 			->dispatch(__CLASS__, __METHOD__, $variables);
@@ -288,7 +288,7 @@ class VideoplayerController extends ActionController {
 	 * @return array
 	 */
 	protected function getVideoIdsByContentUid($uid) {
-		$uids = array();
+		$uids = [];
 		$res = $this->getDatabase()
 			->exec_SELECTquery('video_uid', 'tx_html5videoplayer_video_content', 'content_uid=' . intval($uid), '', 'sorting');
 		while ($row = $this->getDatabase()

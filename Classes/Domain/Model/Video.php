@@ -31,7 +31,6 @@ use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
@@ -489,9 +488,9 @@ class Video extends AbstractEntity
         }
         if ($mediaWizard !== null) {
             $cObj = new ContentObjectRenderer();
-            return $cObj->typoLink_URL(array(
+            return $cObj->typoLink_URL([
                 'parameter' => $mediaWizard->rewriteUrl($media)
-            ));
+            ]);
         }
 
         if (GeneralUtility::isValidUrl($media)) {

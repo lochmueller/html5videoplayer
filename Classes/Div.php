@@ -30,7 +30,7 @@ class Div {
 		// Clear Cache
 		$res = $this->getDatabase()
 			->exec_SELECTquery('tt_content.*', 'tt_content,tx_html5videoplayer_video_content', 'tt_content.uid=tx_html5videoplayer_video_content.content_uid AND tx_html5videoplayer_video_content.video_uid=' . intval($id));
-		$pages = array();
+		$pages = [];
 		while ($row = $this->getDatabase()
 			->sql_fetch_assoc($res)) {
 			$pages[] = $row['pid'];

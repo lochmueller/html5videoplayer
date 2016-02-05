@@ -68,8 +68,8 @@ class VideoRepository extends Repository {
 	 *
 	 * @return array
 	 */
-	public function findByUids(array $uids = array()) {
-		$objects = array();
+	public function findByUids(array $uids = []) {
+		$objects = [];
 		foreach ($uids as $u) {
 			$object = $this->findByUid((int)$u);
 			if ($object !== NULL) {

@@ -1,10 +1,10 @@
 <?php
 
 // column
-$GLOBALS['TCA']['tt_content']['columns']['tx_html5videoplayer_videos'] = array(
+$GLOBALS['TCA']['tt_content']['columns']['tx_html5videoplayer_videos'] = [
 	'exclude' => 0,
 	'label'   => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:videos',
-	'config'  => array(
+	'config'  => [
 		'type'             => 'inline',
 		'foreign_table'    => 'tx_html5videoplayer_video_content',
 		'foreign_field'    => 'content_uid',
@@ -13,12 +13,12 @@ $GLOBALS['TCA']['tt_content']['columns']['tx_html5videoplayer_videos'] = array(
 		'foreign_selector' => 'video_uid',
 		'foreign_unique'   => 'video_uid',
 		'maxitems'         => '100',
-		'appearance'       => array(
+		'appearance'       => [
 			'collapseAll'     => FALSE, // working RTE in TYPO3 > 7.4?!?!
 			'expandSingle'    => TRUE,
 			'useCombination'  => 1,
 			'useSortable'     => TRUE,
-			'enabledControls' => array(
+			'enabledControls' => [
 				'info',
 				'new',
 				'dragdrop',
@@ -26,10 +26,10 @@ $GLOBALS['TCA']['tt_content']['columns']['tx_html5videoplayer_videos'] = array(
 				'hide',
 				'delete',
 				'localize',
-			),
-		),
-	),
-);
+			],
+		],
+	],
+];
 
 $storageId = \HVP\Html5videoplayer\Div::getGeneralStorageFolder();
 if ($storageId) {
