@@ -12,39 +12,41 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  * @api
  * @scope   prototype
  */
-class EmbedViewHelper extends AbstractViewHelper {
+class EmbedViewHelper extends AbstractViewHelper
+{
 
-	/**
-	 * Just render everything.
-	 *
-	 * @param string  $value
-	 * @param integer $videowidth
-	 * @param integer $videoheight
-	 * @param string  $src
-	 * @param string  $imgfallback
-	 * @param boolean $autoplay
-	 *
-	 * @return string
-	 */
-	public function render($value, $videowidth, $videoheight, $src, $imgfallback = NULL, $autoplay = FALSE) {
+    /**
+     * Just render everything.
+     *
+     * @param string  $value
+     * @param integer $videowidth
+     * @param integer $videoheight
+     * @param string  $src
+     * @param string  $imgfallback
+     * @param boolean $autoplay
+     *
+     * @return string
+     */
+    public function render($value, $videowidth, $videoheight, $src, $imgfallback = null, $autoplay = false)
+    {
 
-		if ($imgfallback != NULL) {
-			$configuration['playlist'] = ['###IMAGE###'];
-		}
-		$configuration['playlist'][] = [
-			'url'           => '###URL###',
-			'autoPlay'      => $autoplay,
-			'autoBuffering' => TRUE,
-		];
+        if ($imgfallback != null) {
+            $configuration['playlist'] = ['###IMAGE###'];
+        }
+        $configuration['playlist'][] = [
+            'url'           => '###URL###',
+            'autoPlay'      => $autoplay,
+            'autoBuffering' => true,
+        ];
 
-		$json = json_encode($configuration);
+        $json = json_encode($configuration);
 
-		if (substr($value, 0, strlen('http')) !== "http") {
-			$value = GeneralUtility::getIndpEnv('TYPO3_SITE_URL') . $value;
-		}
-		$json = str_replace('###URL###', $value, $json);
-		$json = str_replace('###IMAGE###', $imgfallback, $json);
+        if (substr($value, 0, strlen('http')) !== "http") {
+            $value = GeneralUtility::getIndpEnv('TYPO3_SITE_URL') . $value;
+        }
+        $json = str_replace('###URL###', $value, $json);
+        $json = str_replace('###IMAGE###', $imgfallback, $json);
 
-		return '<embed type="application/x-shockwave-flash" width="' . $videowidth . '" height="' . $videoheight . '" src="' . $src . '" flashvars=\'config=' . $json . '\' allowfullscreen="true" />';
-	}
+        return '<embed type="application/x-shockwave-flash" width="' . $videowidth . '" height="' . $videoheight . '" src="' . $src . '" flashvars=\'config=' . $json . '\' allowfullscreen="true" />';
+    }
 }

@@ -314,9 +314,9 @@ $tca = [
             'exclude' => 1,
             'label'   => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:tx_html5videoplayer_domain_model_video.preloadvideo',
             'config'  => [
-                'type'  => 'select',
-                'renderType'          => 'selectSingleBox',
-                'items' => [
+                'type'       => 'select',
+                'renderType' => 'selectSingleBox',
+                'items'      => [
                     [
                         'Auto',
                         "auto"

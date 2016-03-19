@@ -37,32 +37,35 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  *
  * @api
  */
-class StripTagsViewHelper extends AbstractViewHelper {
+class StripTagsViewHelper extends AbstractViewHelper
+{
 
-	/**
-	 * Disable the escaping interceptor because otherwise the child nodes would be escaped before this view helper
-	 * can decode the text's entities.
-	 *
-	 * @var boolean
-	 */
-	protected $escapingInterceptorEnabled = FALSE;
+    /**
+     * Disable the escaping interceptor because otherwise the child nodes would be escaped before this view helper
+     * can decode the text's entities.
+     *
+     * @var boolean
+     */
+    protected $escapingInterceptorEnabled = false;
 
-	/**
-	 * Escapes special characters with their escaped counterparts as needed using PHPs strip_tags() function.
-	 *
-	 * @param string $value string to format
-	 * @return mixed|null|string
-	 * @see http://www.php.net/manual/function.strip-tags.php
-	 * @api
-	 */
-	public function render($value = NULL) {
-		if ($value === NULL) {
-			$value = $this->renderChildren();
-		}
-		if (!is_string($value)) {
-			return $value;
-		}
-		return strip_tags($value);
-	}
+    /**
+     * Escapes special characters with their escaped counterparts as needed using PHPs strip_tags() function.
+     *
+     * @param string $value string to format
+     *
+     * @return mixed|null|string
+     * @see http://www.php.net/manual/function.strip-tags.php
+     * @api
+     */
+    public function render($value = null)
+    {
+        if ($value === null) {
+            $value = $this->renderChildren();
+        }
+        if (!is_string($value)) {
+            return $value;
+        }
+        return strip_tags($value);
+    }
 
 }

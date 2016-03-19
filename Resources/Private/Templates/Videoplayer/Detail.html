@@ -4,11 +4,13 @@
 <f:section name="main">
 	<div class="detail">
 		<f:if condition="{settings.ff.hideVideoHeader}">
-			<f:then> </f:then>
+			<f:then></f:then>
 			<f:else><h2>{currentVideo.title}</h2></f:else>
 		</f:if>
 		<f:render partial="Videoplayer/Entry" arguments="{video: currentVideo}" />
-		<h2><f:translate key="more.videos" /></h2>
+		<h2>
+			<f:translate key="more.videos" />
+		</h2>
 		<f:render partial="Videoplayer/List" arguments="{videos: videos, currentVideo:currentVideo}" />
 
 		<f:if condition="{settings.skipOverview}">
@@ -16,7 +18,9 @@
 				<!-- no Backlink -->
 			</f:then>
 			<f:else>
-				<f:link.page><f:translate key="back" /></f:link.page>
+				<f:link.page>
+					<f:translate key="back" />
+				</f:link.page>
 			</f:else>
 		</f:if>
 

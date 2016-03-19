@@ -497,8 +497,7 @@ class Video extends AbstractEntity
             return $media;
         }
 
-        throw new \Exception('You are running TYPO3 > CMS 7.2. Please install the mediace extension',
-            12367238462384);
+        throw new \Exception('You are running TYPO3 > CMS 7.2. Please install the mediace extension', 12367238462384);
     }
 
     /**

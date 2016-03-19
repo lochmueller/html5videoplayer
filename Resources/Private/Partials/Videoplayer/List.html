@@ -1,32 +1,34 @@
 {namespace h5v=HVP\Html5videoplayer\ViewHelpers}
 
 <div class="video-list">
-    <f:for each="{videos}" as="v">
-        <div class="item {f:if(condition: '{v} == {currentVideo}', then: 'active')}">
-            <f:alias map="{mode: 'normalWidthAndHeight'}">
-                <f:link.action action="detail" arguments="{video:v}">
-	                <f:if condition="{v.posterimage}">
-		                <f:then>
-			                <f:if condition="{settings.listThumbMode} == {mode}">
-				                <f:then>
-					                <f:image src="{v.posterimage}" height="{settings.listThumbHeight}" width="{settings.listThumbWidth}" alt="{v.title}"/>
-				                </f:then>
-				                <f:else>
-					                <f:image src="{v.posterimage}" maxHeight="{settings.listThumbHeight}" maxWidth="{settings.listThumbWidth}" alt="{v.title}"/>
-				                </f:else>
-			                </f:if>
-		                </f:then>
-		                <f:else>
-			                {v.title}
-		                </f:else>
-	                </f:if>
-                </f:link.action>
-                <f:if condition="{settings.listThumbTeaser}">
-                    <p class="video-description">
-                        <f:format.crop maxCharacters="{settings.listThumbTeaser}"><h5v:format.stripTags>{v.description}</h5v:format.stripTags></f:format.crop>
-                    </p>
-                </f:if>
-            </f:alias>
-        </div>
-    </f:for>
+	<f:for each="{videos}" as="v">
+		<div class="item {f:if(condition: '{v} == {currentVideo}', then: 'active')}">
+			<f:alias map="{mode: 'normalWidthAndHeight'}">
+				<f:link.action action="detail" arguments="{video:v}">
+					<f:if condition="{v.posterimage}">
+						<f:then>
+							<f:if condition="{settings.listThumbMode} == {mode}">
+								<f:then>
+									<f:image src="{v.posterimage}" height="{settings.listThumbHeight}" width="{settings.listThumbWidth}" alt="{v.title}" />
+								</f:then>
+								<f:else>
+									<f:image src="{v.posterimage}" maxHeight="{settings.listThumbHeight}" maxWidth="{settings.listThumbWidth}" alt="{v.title}" />
+								</f:else>
+							</f:if>
+						</f:then>
+						<f:else>
+							{v.title}
+						</f:else>
+					</f:if>
+				</f:link.action>
+				<f:if condition="{settings.listThumbTeaser}">
+					<p class="video-description">
+						<f:format.crop maxCharacters="{settings.listThumbTeaser}">
+							<h5v:format.stripTags>{v.description}</h5v:format.stripTags>
+						</f:format.crop>
+					</p>
+				</f:if>
+			</f:alias>
+		</div>
+	</f:for>
 </div>
