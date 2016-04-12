@@ -22,7 +22,7 @@
   ],
   "require": {
     "php": ">=5.4.0",
-    "typo3/cms-core": "~6.2.14|>=7.4.0,<8.0"
+    "typo3/cms-core": "~6.2.14|>=7.4.0,<9.0"
   },
   "replace": {
     "html5videoplayer": "self.version",
