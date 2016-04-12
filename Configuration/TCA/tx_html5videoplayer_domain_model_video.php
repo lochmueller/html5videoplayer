@@ -33,20 +33,9 @@ $tca = [
             'exclude' => 1,
             'label'   => 'LLL:EXT:lang/locallang_general.xml:LGL.language',
             'config'  => [
-                'type'                => 'select',
-                'renderType'          => 'selectSingleBox',
-                'foreign_table'       => 'sys_language',
-                'foreign_table_where' => 'ORDER BY sys_language.title',
-                'items'               => [
-                    [
-                        'LLL:EXT:lang/locallang_general.xml:LGL.allLanguages',
-                        -1
-                    ],
-                    [
-                        'LLL:EXT:lang/locallang_general.xml:LGL.default_value',
-                        0
-                    ]
-                ]
+                'type'       => 'select',
+                'special'    => 'languages',
+                'renderType' => 'selectSingle',
             ]
         ],
         'l10n_parent'      => [
@@ -55,7 +44,7 @@ $tca = [
             'label'       => 'LLL:EXT:lang/locallang_general.xml:LGL.l18n_parent',
             'config'      => [
                 'type'                => 'select',
-                'renderType'          => 'selectSingleBox',
+                'renderType'          => 'selectSingle',
                 'items'               => [
                     [
                         '',
@@ -315,7 +304,7 @@ $tca = [
             'label'   => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:tx_html5videoplayer_domain_model_video.preloadvideo',
             'config'  => [
                 'type'       => 'select',
-                'renderType' => 'selectSingleBox',
+                'renderType' => 'selectSingle',
                 'items'      => [
                     [
                         'Auto',
