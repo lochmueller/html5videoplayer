@@ -5,6 +5,7 @@ namespace HVP\Html5videoplayer\Hooks;
 
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
  * Class VimeoProcessDatamap
@@ -76,8 +77,8 @@ class VimeoProcessDatamap
      */
     protected function getUploadFolder()
     {
-        /** @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $dispatcher */
-        $dispatcher = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\SignalSlot\\Dispatcher');
+        /** @var Dispatcher $dispatcher */
+        $dispatcher = GeneralUtility::makeInstance(Dispatcher::class);
         $arguments = [
             $this->defaultUploadFolder,
         ];
@@ -85,4 +86,4 @@ class VimeoProcessDatamap
         return $arguments[0];
     }
 
-} 
+}

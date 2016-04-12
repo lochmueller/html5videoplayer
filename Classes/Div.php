@@ -6,6 +6,7 @@
 namespace HVP\Html5videoplayer;
 
 use TYPO3\CMS\Core\Database\DatabaseConnection;
+use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -38,8 +39,8 @@ class Div
             ->sql_fetch_assoc($res)) {
             $pages[] = $row['pid'];
         }
-        /** @var \TYPO3\CMS\Core\DataHandling\DataHandler $cache */
-        $cache = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\DataHandling\\DataHandler');
+        /** @var DataHandler $cache */
+        $cache = GeneralUtility::makeInstance(DataHandler::class);
         if (!is_object($cache->BE_USER)) {
             $cache->BE_USER = $GLOBALS['BE_USER'];
         }
@@ -99,8 +100,8 @@ class Div
      */
     public static function featureEnable($feature)
     {
-        /** @var \HVP\Html5videoplayer\Div $div */
-        $div = GeneralUtility::makeInstance('HVP\\Html5videoplayer\\Div');
+        /** @var Div $div */
+        $div = GeneralUtility::makeInstance(Div::class);
         return $div->featureEnableInternal($feature);
     }
 

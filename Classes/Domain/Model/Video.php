@@ -479,10 +479,10 @@ class Video extends AbstractEntity
         }
 
         $mediaWizard = null;
-        if (class_exists('TYPO3\\CMS\\Mediace\\MediaWizard\\MediaWizardProviderManager')) {
+        if (class_exists(\TYPO3\CMS\Mediace\MediaWizard\MediaWizardProviderManager::class)) {
             // 7.2
             $mediaWizard = \TYPO3\CMS\Mediace\MediaWizard\MediaWizardProviderManager::getValidMediaWizardProvider($media);
-        } elseif (class_exists('TYPO3\\CMS\\Frontend\\MediaWizard\\MediaWizardProviderManager')) {
+        } elseif (class_exists(\TYPO3\CMS\Frontend\MediaWizard\MediaWizardProviderManager::class)) {
             // before 7.2
             $mediaWizard = \TYPO3\CMS\Frontend\MediaWizard\MediaWizardProviderManager::getValidMediaWizardProvider($media);
         }

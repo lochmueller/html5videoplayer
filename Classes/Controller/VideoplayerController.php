@@ -16,7 +16,9 @@ use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
+use TYPO3\CMS\Extbase\Configuration\FrontendConfigurationManager;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
@@ -64,8 +66,8 @@ class VideoplayerController extends ActionController
         $this->configuration = $this->settings['videoplayer'];
 
         // Check Xhtml Cleaning
-        /** @var \\TYPO3\CMS\Extbase\Configuration\FrontendConfigurationManager $feConfigManager */
-        $feConfigManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Configuration\\FrontendConfigurationManager');
+        /** @var FrontendConfigurationManager $feConfigManager */
+        $feConfigManager = GeneralUtility::makeInstance(FrontendConfigurationManager::class);
         $typoScript = $feConfigManager->getTypoScriptSetup();
         if (isset($typoScript['config.']['xhtml_cleaning']) && in_array(trim($typoScript['config.']['xhtml_cleaning']), [
                 'all',
@@ -199,11 +201,11 @@ class VideoplayerController extends ActionController
     /**
      * Get a signal slot dispatcher
      *
-     * @return \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
+     * @return Dispatcher
      */
     protected function getSignalSlotDispatcher()
     {
-        return $this->objectManager->get('TYPO3\\CMS\\Extbase\\SignalSlot\\Dispatcher');
+        return $this->objectManager->get(Dispatcher::class);
     }
 
     /**

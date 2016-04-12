@@ -24,6 +24,7 @@ namespace HVP\Html5videoplayer;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  * ************************************************************* */
+use TYPO3\CMS\Core\Localization\Parser\LocallangXmlParser;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Lang\LanguageService;
@@ -84,8 +85,8 @@ class Wizicon
     function includeLocalLang()
     {
         $llFile = ExtensionManagementUtility::extPath('html5videoplayer') . '/Resources/Private/Language/locallang.xml';
-        /** @var \TYPO3\CMS\Core\Localization\Parser\LocallangXmlParser $parser */
-        $parser = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Localization\\Parser\\LocallangXmlParser');
+        /** @var LocallangXmlParser $parser */
+        $parser = GeneralUtility::makeInstance(LocallangXmlParser::class);
         $LOCAL_LANG = $parser->getParsedData($llFile, $GLOBALS['LANG']->lang);
         return $LOCAL_LANG;
     }
