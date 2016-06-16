@@ -2,7 +2,6 @@
 
 namespace HVP\Html5videoplayer\Hooks;
 
-
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
@@ -33,13 +32,19 @@ class VimeoProcessDatamap
         if ($table == 'tx_html5videoplayer_domain_model_video') {
             $data = $fieldArray;
             if ($status == 'update') {
-                $data = array_merge($GLOBALS['TYPO3_DB']->exec_SELECTgetSingleRow('*', 'tx_html5videoplayer_domain_model_video',
-                    'uid=' . (int)$id), $data);
+                $data = array_merge($GLOBALS['TYPO3_DB']->exec_SELECTgetSingleRow(
+                    '*',
+                    'tx_html5videoplayer_domain_model_video',
+                    'uid=' . (int)$id
+                ), $data);
             }
             $vimeoUrl = $data['vimeo'];
             if (($status == 'update' || $status == 'new') && $vimeoUrl != '' && GeneralUtility::isValidUrl($vimeoUrl)) {
-                if (preg_match('/https?:\\/\\/(?:www\\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|)(\d+)(?:$|\/|\?)/i',
-                    $vimeoUrl, $matches)) {
+                if (preg_match(
+                    '/https?:\\/\\/(?:www\\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|)(\d+)(?:$|\/|\?)/i',
+                    $vimeoUrl,
+                    $matches
+                )) {
                     $videoId = $matches[3];
                     $videoData = unserialize(GeneralUtility::getUrl('http://vimeo.com/api/v2/video/' . $videoId . '.php'));
 
@@ -85,5 +90,4 @@ class VimeoProcessDatamap
         $arguments = $dispatcher->dispatch(__CLASS__, __METHOD__, $arguments);
         return $arguments[0];
     }
-
 }

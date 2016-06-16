@@ -559,5 +559,4 @@ class Video extends AbstractEntity
         $default = Div::getConfigurationValue('generalMinHeight');
         return (int)$default ?: 150;
     }
-
 }

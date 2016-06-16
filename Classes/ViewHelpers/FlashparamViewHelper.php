@@ -50,5 +50,4 @@ class FlashparamViewHelper extends AbstractViewHelper
 
         return '<param name="flashvars" value=\'config=' . $json . '\' />';
     }
-
 }

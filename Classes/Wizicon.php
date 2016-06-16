@@ -90,5 +90,4 @@ class Wizicon
         $LOCAL_LANG = $parser->getParsedData($llFile, $GLOBALS['LANG']->lang);
         return $LOCAL_LANG;
     }
-
 }

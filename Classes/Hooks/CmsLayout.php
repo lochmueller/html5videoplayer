@@ -5,7 +5,6 @@ namespace HVP\Html5videoplayer\Hooks;
 use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-
 /**
  * Render CMS Layout
  */
@@ -46,7 +45,6 @@ class CmsLayout
         $videos = $this->getVideosByContentUid($params['row']['uid']);
         foreach ($videos as $video) {
             $result .= '<li>' . $video['title'] . '</li>';
-
         }
         $result .= '</ul>';
 
@@ -61,10 +59,13 @@ class CmsLayout
     protected function getVideosByContentUid($uid)
     {
         return $this->getDatabaseConnection()
-            ->exec_SELECTgetRows('tx_html5videoplayer_domain_model_video.*',
+            ->exec_SELECTgetRows(
+                'tx_html5videoplayer_domain_model_video.*',
                 'tx_html5videoplayer_domain_model_video,tx_html5videoplayer_video_content',
                 'tx_html5videoplayer_domain_model_video.uid = tx_html5videoplayer_video_content.video_uid AND tx_html5videoplayer_domain_model_video.deleted=0 AND tx_html5videoplayer_video_content.content_uid=' . (int)$uid,
-                '', 'tx_html5videoplayer_video_content.sorting');
+                '',
+                'tx_html5videoplayer_video_content.sorting'
+            );
     }
 
     /**
@@ -95,5 +96,4 @@ class CmsLayout
     {
         return $GLOBALS['TYPO3_DB'];
     }
-
 }

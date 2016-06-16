@@ -111,17 +111,19 @@ class VideoplayerController extends ActionController
         $contentElement = $contentObject->data;
 
         if (isset($this->settings['videoUids']['_typoScriptNodeValue'])) {
-            $videoUids = $contentObject->cObjGetSingle($this->settings['videoUids']['_typoScriptNodeValue'],
-                $this->settings['videoUids']);
+            $videoUids = $contentObject->cObjGetSingle(
+                $this->settings['videoUids']['_typoScriptNodeValue'],
+                $this->settings['videoUids']
+            );
         }
         $videos = [];
         if (!empty($videoUids) && $this->settings['videoUids']) { // TypoScript
             $videos = $this->videoRepository->findByUids(GeneralUtility::trimExplode(',', $videoUids, true));
         } elseif (isset($contentElement['uid'])) { // Content Element
             $videos = $this->videoRepository->findByUids($this->getVideoIdsByContentUid($contentElement['uid']));
-        } else if (isset($contentElement[0]) && !is_array(isset($contentElement[0]))) { // Fluid cObject data
+        } elseif (isset($contentElement[0]) && !is_array(isset($contentElement[0]))) { // Fluid cObject data
             $videos = $this->videoRepository->findByUids(GeneralUtility::trimExplode(',', $contentElement[0], true));
-        } else if (trim($this->configuration['videos']) != '') { // TypoScript
+        } elseif (trim($this->configuration['videos']) != '') { // TypoScript
             $videos = $this->videoRepository->findByUids(GeneralUtility::trimExplode(',', $this->configuration['videos'], true));
         }
 
@@ -332,5 +334,4 @@ class VideoplayerController extends ActionController
     {
         return $GLOBALS['TSFE'];
     }
-
 }
