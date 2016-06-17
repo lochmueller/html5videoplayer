@@ -24,7 +24,7 @@ class Div
      * @param int $fieldArray
      * @param     $obj
      */
-    function processDatamap_postProcessFieldArray($status, $table, $id, &$fieldArray, &$obj)
+    public function processDatamap_postProcessFieldArray($status, $table, $id, &$fieldArray, &$obj)
     {
         if ($table != 'tx_html5videoplayer_domain_model_video') {
             return;

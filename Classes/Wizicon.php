@@ -46,7 +46,7 @@ class Wizicon
      *
      * @return    array Modified array with wizard items
      */
-    function proc($wizardItems)
+    public function proc($wizardItems)
     {
         $LL = $this->includeLocalLang();
 
@@ -82,7 +82,7 @@ class Wizicon
      *
      * @return  array   The array with language labels
      */
-    function includeLocalLang()
+    public function includeLocalLang()
     {
         $llFile = ExtensionManagementUtility::extPath('html5videoplayer') . '/Resources/Private/Language/locallang.xml';
         /** @var LocallangXmlParser $parser */

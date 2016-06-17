@@ -26,7 +26,7 @@ class VimeoProcessDatamap
      * @param $fieldArray
      * @param $self
      */
-    function processDatamap_postProcessFieldArray($status, $table, $id, &$fieldArray, &$self)
+    public function processDatamap_postProcessFieldArray($status, $table, $id, &$fieldArray, &$self)
     {
 
         if ($table == 'tx_html5videoplayer_domain_model_video') {
