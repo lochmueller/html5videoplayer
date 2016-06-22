@@ -16,7 +16,7 @@ return [
     ],
     'columns'   => [
         'content_uid' => [
-            'label'  => 'CC',
+            'label'  => 'Content Element',
             'config' => [
                 'type'          => 'select',
                 'renderType'    => 'selectSingleBox',
@@ -30,7 +30,7 @@ return [
             'label'  => 'Video',
             'config' => [
                 'type'                => 'select',
-                'renderType'          => 'selectSingleBox',
+                'renderType'          => 'selectMultipleSideBySide',
                 'foreign_table'       => 'tx_html5videoplayer_domain_model_video',
                 'foreign_table_where' => ' AND sys_language_uid IN (0,-1)',
                 'size'                => 3,
