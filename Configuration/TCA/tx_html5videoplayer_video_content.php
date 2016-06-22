@@ -33,7 +33,7 @@ return [
                 'renderType'          => 'selectSingleBox',
                 'foreign_table'       => 'tx_html5videoplayer_domain_model_video',
                 'foreign_table_where' => ' AND sys_language_uid IN (0,-1)',
-                'size'                => 1,
+                'size'                => 3,
                 'minitems'            => 0,
                 'maxitems'            => 1,
             ],
