@@ -27,7 +27,7 @@ return [
             ],
         ],
         'video_uid'   => [
-            'label'  => 'Vid',
+            'label'  => 'Video',
             'config' => [
                 'type'                => 'select',
                 'renderType'          => 'selectSingleBox',
