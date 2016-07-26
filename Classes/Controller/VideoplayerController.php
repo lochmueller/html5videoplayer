@@ -119,6 +119,8 @@ class VideoplayerController extends ActionController
         $videos = [];
         if (!empty($videoUids) && $this->settings['videoUids']) { // TypoScript
             $videos = $this->videoRepository->findByUids(GeneralUtility::trimExplode(',', $videoUids, true));
+        } elseif (isset($contentElement['_LOCALIZED_UID'])) { // Content Element, localized
+            $videos = $this->videoRepository->findByUids($this->getVideoIdsByContentUid($contentElement['_LOCALIZED_UID']));
         } elseif (isset($contentElement['uid'])) { // Content Element
             $videos = $this->videoRepository->findByUids($this->getVideoIdsByContentUid($contentElement['uid']));
         } elseif (isset($contentElement[0]) && !is_array(isset($contentElement[0]))) { // Fluid cObject data
