@@ -46,7 +46,8 @@ class VideoRepository extends Repository
     {
         $query = parent::createQuery();
         $query->getQuerySettings()
-            ->setRespectStoragePage(false);
+            ->setRespectStoragePage(false)
+            ->setRespectSysLanguage(false);
         return $query;
     }
 
