@@ -10,7 +10,7 @@ use HVP\Html5videoplayer\Domain\Model\Video;
 /**
  * VideoTest
  */
-class VideoTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
+class VideoTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
