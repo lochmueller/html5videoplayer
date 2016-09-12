@@ -542,7 +542,12 @@ class Video extends AbstractEntity
     public function getMinWidth()
     {
         $width = $this->getWidth();
-        if (trim($width) !== '' && (int)$width !== 0) {
+        if (
+            trim($width) !== '' &&
+            (
+                ((int)$width !== 0) || trim($width) === 'auto'
+            )
+        ) {
             return $width;
         }
 
@@ -556,7 +561,12 @@ class Video extends AbstractEntity
     public function getMinHeight()
     {
         $height = $this->getHeight();
-        if (trim($height) !== '' && (int)$height !== 0) {
+        if (
+            trim($height) !== '' &&
+            (
+                ((int)$height !== 0) || trim($height) === 'auto'
+            )
+        ) {
             return $height;
         }
 
