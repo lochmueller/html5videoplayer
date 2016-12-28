@@ -1,0 +1,8 @@
+.DS_Store
+.npmignore
+.gitignore
+.jshintrc
+.jshintignore
+src
+tests
+karma.conf.js
