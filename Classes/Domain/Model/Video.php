@@ -460,10 +460,10 @@ class Video extends AbstractEntity
             return '';
         }
 
-		// Quick-fix for the Vimeo api (add "?api=1" to the media address)
-		if(strpos($media, 'vimeo.com') !== false) {
-			$media = $media .'?api=1';
-		}
+        // Quick-fix for the Vimeo api (add "?api=1" to the media address)
+        if (strpos($media, 'vimeo.com') !== false) {
+            $media = $media .'?api=1';
+        }
 
         // Get the path relative to the page currently outputted
         if (substr($media, 0, 5) === "file:") {
@@ -547,8 +547,7 @@ class Video extends AbstractEntity
     public function getMinWidth()
     {
         $width = $this->getWidth();
-        if (
-            trim($width) !== '' &&
+        if (trim($width) !== '' &&
             (
                 ((int)$width !== 0) || trim($width) === 'auto'
             )
@@ -566,8 +565,7 @@ class Video extends AbstractEntity
     public function getMinHeight()
     {
         $height = $this->getHeight();
-        if (
-            trim($height) !== '' &&
+        if (trim($height) !== '' &&
             (
                 ((int)$height !== 0) || trim($height) === 'auto'
             )
