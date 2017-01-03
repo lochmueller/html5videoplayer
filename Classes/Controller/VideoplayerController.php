@@ -255,9 +255,9 @@ class VideoplayerController extends ActionController
 
             $this->addHeader('<link href="' . $css . '" type="text/css" rel="stylesheet" media="screen" />');
             $this->addHeader('<script src="' . $javaScript . '" type="text/javascript"></script>');
-            $this->addHeader('<script src="' . $folder . 'videojs-youtube-2.0.8/dist/Youtube.min.js" type="text/javascript"></script>');
+            $this->addHeader('<script src="' . $folder . 'videojs-youtube-2.2.0/dist/Youtube.min.js" type="text/javascript"></script>');
             if (Div::featureEnable('vimeo')) {
-                $this->addHeader('<script src="' . $folder . 'videojs-vimeo-master/src/Vimeo.js" type="text/javascript"></script>');
+                $this->addHeader('<script src="' . $folder . 'videojs-vimeo-2.0.2/src/Vimeo.js" type="text/javascript"></script>');
             }
             if ($swf) {
                 $this->addHeader($swf);
