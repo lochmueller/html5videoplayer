@@ -1,7 +1,7 @@
 {
   "name": "lochmueller/html5videoplayer",
   "type": "typo3-cms-extension",
-  "version": "7.0.0",
+  "version": "7.0.1",
   "description": "A video extension for TYPO3 built on the VideoJS HTML5 video player library. Allows you to embed video in your website using HTML5 with Flash fallback support for non-HTML5 browsers. Work on VideoJS 4.12.6 and support YouTube and Vimeo video in the same style.",
   "autoload": {
     "psr-4": {
