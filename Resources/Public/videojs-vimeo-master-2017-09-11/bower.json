@@ -1,0 +1,13 @@
+{
+  "name": "videojs-vimeo",
+  "author": "Jimmy Bourassa &lt;jbourassa@didacte.com&gt;",
+  "license": "MIT",
+  "main": [
+    "dist/videojs-vimeo.min.js"
+  ],
+  "keywords": [
+    "videojs",
+    "videojs-plugin"
+  ]
+}
+

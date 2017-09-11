@@ -16,12 +16,19 @@
 
 <!-- Begin VideoJS -->
 <div class="video-js-box ">
-	<video id="video_{video.uid}" class="video-js vjs-default-skin" width="{f:if(condition:'{settings.ff.videowidth} > 0', then: settings.ff.videowidth, else: video.minWidth)}" height="{f:if(condition:'{settings.ff.videoheight} > 0', then: settings.ff.videoheight, else: video.minHeight)}" preload="{video.preloadvideo}"<f:if condition="{video.autoplayvideo}"> autoplay</f:if><f:if condition="{video.loopvideo}"> loop</f:if><f:if condition="{video.posterimage}"> poster="{video.posterimage}"</f:if><f:if condition="{video.controlsvideo}"> controls</f:if> data-setup='{<f:if condition="{video.videoStarttime}">"starttime": {video.videoStarttime},</f:if><![CDATA["techOrder":["youtube","vimeo","html5","flash"], "ytcontrols": true]]>}'>
+	<video
+			id="video_{video.uid}"
+			class="video-js vjs-default-skin"
+			width="{f:if(condition:'{settings.ff.videowidth} > 0', then: settings.ff.videowidth, else: video.minWidth)}"
+			height="{f:if(condition:'{settings.ff.videoheight} > 0', then: settings.ff.videoheight, else: video.minHeight)}"
+			preload="{video.preloadvideo}"<f:if condition="{video.autoplayvideo}"> autoplay</f:if><f:if condition="{video.loopvideo}"> loop</f:if><f:if condition="{video.posterimage}"> poster="{video.posterimage}"</f:if><f:if condition="{video.controlsvideo}"> controls</f:if>
+			data-setup='<h5v:format.wrapCurlyBraces><f:if condition="{video.videoStarttime}">"starttime": {video.videoStarttime},</f:if>"techOrder":[{video.techOrder}], "ytcontrols": true</h5v:format.wrapCurlyBraces>'>
 		<f:if condition="{video.webmsource}"><source src="{video.webmsource}" type="video/webm" /></f:if>
 		<f:if condition="{video.oggsource}"><source src="{video.oggsource}" type="video/ogg" /></f:if>
 		<f:if condition="{video.mp4source}"><source src="{video.mp4source}" type="video/mp4" /></f:if>
 		<f:if condition="{video.youtube}"><source src="{video.youtube}" type="video/youtube" /></f:if>
         <f:if condition="{video.vimeo}"><source src="{video.vimeo}" type="video/vimeo" /></f:if>
+
 	</video>
 	<p class="vjs-no-video">
 		<f:if condition="{video.downloadlinks}">
