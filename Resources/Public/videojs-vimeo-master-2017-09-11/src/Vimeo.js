@@ -263,7 +263,7 @@ Vimeo.nativeSourceHandler.dispose = function() { };
 
 Vimeo.registerSourceHandler(Vimeo.nativeSourceHandler);
 
-Component.registerComponent('Vimeo', Vimeo);
+//Component.registerComponent('Vimeo', Vimeo);
 Tech.registerTech('Vimeo', Vimeo);
 
 // Include the version number.

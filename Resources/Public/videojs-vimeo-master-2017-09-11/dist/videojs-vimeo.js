@@ -304,7 +304,7 @@ function injectCss() {
   head.appendChild(style);
 }
 
-Component.registerComponent('Vimeo', Vimeo);
+//Component.registerComponent('Vimeo', Vimeo);
 Tech.registerTech('Vimeo', Vimeo);
 
 // Include the version number.
