@@ -18,6 +18,15 @@ $GLOBALS['TCA']['tt_content']['columns']['tx_html5videoplayer_videos'] = [
             'expandSingle'    => true,
             'useCombination'  => 1,
             'useSortable'     => true,
+            'enabledControls' => [
+                'info' => TRUE,
+                'new' => TRUE,
+                'dragdrop' => TRUE,
+                'sort' => TRUE,
+                'hide' => TRUE,
+                'delete' => TRUE,
+                'localize' => TRUE,
+            ],
         ],
     ],
 ];
