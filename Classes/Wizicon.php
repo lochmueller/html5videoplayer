@@ -49,14 +49,8 @@ class Wizicon
     public function proc($wizardItems)
     {
         $LL = $this->includeLocalLang();
-
-        $icon = 'EXT:html5videoplayer/Resources/Public/Icons/Wizicon.gif';
-        if (!GeneralUtility::compat_version('7.0')) {
-            $icon = ExtensionManagementUtility::extRelPath('html5videoplayer') . '/Resources/Public/Icons/Wizicon.gif';
-        }
-
         $wizardItems['plugins_tx_html5videoplayer_pi1'] = [
-            'icon'        => $icon,
+            'icon'        => 'EXT:html5videoplayer/Resources/Public/Icons/Wizicon.gif',
             'title'       => $this->getLanguage()
                 ->getLLL('list_title', $LL),
             'description' => $this->getLanguage()

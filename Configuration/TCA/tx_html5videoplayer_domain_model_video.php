@@ -102,7 +102,7 @@ $tca = [
             'label'   => 'LLL:EXT:lang/locallang_general.xml:LGL.fe_group',
             'config'  => [
                 'type'          => 'select',
-                'renderType'    => 'selectMultipleSideBySide',
+                'renderType' => 'selectSingle',
                 'items'         => [
                     [
                         '',

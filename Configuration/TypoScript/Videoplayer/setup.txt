@@ -35,3 +35,12 @@ plugin.tx_html5videoplayer {
 		}
 	}
 }
+
+
+# if you use skipHtmlHeaderInformation you can set the required files by yourself
+# Example:
+#page.includeCSS.html5videoplayer = //vjs.zencdn.net/5.14.1/video-js.css
+#page.includeJS.html5videoplayer = //vjs.zencdn.net/5.14.1/video.js
+#page.includeJS.html5videoplayer.external = 1
+#page.includeJS.html5videoplayerYouTube = EXT:html5videoplayer/Resources/Public/videojs-youtube-2.2.0/dist/Youtube.min.js
+#page.includeJS.html5videoplayerVimeo = EXT:html5videoplayer/Resources/Public/videojs-vimeo-2.0.2/src/Vimeo.js

@@ -31,6 +31,7 @@ use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
@@ -460,6 +461,11 @@ class Video extends AbstractEntity
             return '';
         }
 
+        // Quick-fix for the Vimeo api (add "?api=1" to the media address)
+        if (strpos($media, 'vimeo.com') !== false) {
+            $media = $media . '?api=1';
+        }
+
         // Get the path relative to the page currently outputted
         if (substr($media, 0, 5) === "file:") {
             $fileUid = substr($media, 5);
@@ -473,6 +479,23 @@ class Video extends AbstractEntity
                 }
             }
         }
+
+        if (strpos($media, 't3://') !== false) {
+            /** @var ContentObjectRenderer $contentObject */
+            $contentObject = GeneralUtility::makeInstance(ContentObjectRenderer::class);
+            $contentObject->start([], '');
+            $media = ltrim($contentObject->stdWrap(
+                '',
+                [
+                    'typolink.' => [
+                        'parameter' => $media,
+                        'returnLast' => 'url'
+                    ]
+                ]
+            ));
+        }
+
+        //
 
         if (is_file(PATH_site . $media)) {
             return $GLOBALS['TSFE']->tmpl->getFileName($media);
@@ -494,6 +517,10 @@ class Video extends AbstractEntity
         }
 
         if (GeneralUtility::isValidUrl($media)) {
+            // prevent "data:" and "javascript:" Resources! Whitelist!
+            if (!in_array(parse_url($media, PHP_URL_SCHEME), ['http', 'https'])) {
+                return '';
+            }
             return $media;
         }
 
@@ -513,7 +540,7 @@ class Video extends AbstractEntity
      */
     public function getYoutube()
     {
-        return $this->youtube;
+        return $this->retrieveMediaUrl($this->youtube);
     }
 
     /**
@@ -529,7 +556,7 @@ class Video extends AbstractEntity
      */
     public function getVimeo()
     {
-        return $this->vimeo;
+        return $this->retrieveMediaUrl($this->vimeo);
     }
 
     /**
@@ -538,7 +565,11 @@ class Video extends AbstractEntity
     public function getMinWidth()
     {
         $width = $this->getWidth();
-        if (trim($width) !== '' && (int)$width !== 0) {
+        if (trim($width) !== '' &&
+            (
+                ((int)$width !== 0) || trim($width) === 'auto'
+            )
+        ) {
             return $width;
         }
 
@@ -552,11 +583,30 @@ class Video extends AbstractEntity
     public function getMinHeight()
     {
         $height = $this->getHeight();
-        if (trim($height) !== '' && (int)$height !== 0) {
+        if (trim($height) !== '' &&
+            (
+                ((int)$height !== 0) || trim($height) === 'auto'
+            )
+        ) {
             return $height;
         }
 
         $default = Div::getConfigurationValue('generalMinHeight');
         return (int)$default ?: 150;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTechOrder()
+    {
+        $return = '';
+        if ($this->getYoutube() !== '') {
+            $return .= '"youtube",';
+        }
+        if ($this->getVimeo() !== '') {
+            $return .= '"vimeo",';
+        }
+        return $return . '"html5"';
     }
 }
