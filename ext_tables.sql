@@ -15,7 +15,7 @@ CREATE TABLE tx_html5videoplayer_domain_model_video (
 	hidden tinyint(4) DEFAULT '0' NOT NULL,
 	starttime int(11) DEFAULT '0' NOT NULL,
 	endtime int(11) DEFAULT '0' NOT NULL,
-	fe_group int(11) DEFAULT '0' NOT NULL,
+	fe_group tinytext,
 	title tinytext,
 	description text,
 	posterimage tinytext,
