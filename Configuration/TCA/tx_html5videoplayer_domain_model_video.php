@@ -97,33 +97,7 @@ $tca = [
                 ]
             ]
         ],
-        'fe_group'         => [
-            'exclude' => 1,
-            'label'   => 'LLL:EXT:lang/locallang_general.xml:LGL.fe_group',
-            'config'  => [
-                'type'          => 'select',
-                'renderType' => 'selectSingle',
-                'items'         => [
-                    [
-                        '',
-                        0
-                    ],
-                    [
-                        'LLL:EXT:lang/locallang_general.xml:LGL.hide_at_login',
-                        -1
-                    ],
-                    [
-                        'LLL:EXT:lang/locallang_general.xml:LGL.any_login',
-                        -2
-                    ],
-                    [
-                        'LLL:EXT:lang/locallang_general.xml:LGL.usergroups',
-                        '--div--'
-                    ]
-                ],
-                'foreign_table' => 'fe_groups'
-            ]
-        ],
+        'fe_group' => $GLOBALS['TCA']['tt_content']['columns']['fe_group'],
         'title'            => [
             'exclude' => 0,
             'label'   => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:tx_html5videoplayer_domain_model_video.title',
