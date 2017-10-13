@@ -242,10 +242,10 @@ class VideoplayerController extends ActionController
         if (!self::$includeHeader && $this->settings['skipHtmlHeaderInformation'] != 1) {
             $folder = $this->getResourceFolder();
 
-            $css = $folder . 'video-js-' . self::VIDEO_JS_VERSION . '/video-js.min.css';
-            $javaScript = $folder . 'video-js-' . self::VIDEO_JS_VERSION . '/video.js';
+            $css = $folder . 'video.js-' . self::VIDEO_JS_VERSION . '/video-js.min.css';
+            $javaScript = $folder . 'video.js-' . self::VIDEO_JS_VERSION . '/src/js/video.js';
             // Added the SWF to the locally loaded data
-            $swf = '<script>videojs.options.flash.swf = "' . $folder . 'video-js-' . self::VIDEO_JS_VERSION . '/video-js.swf"</script>';
+            $swf = '<script>videojs.options.flash.swf = "' . $folder . 'video.js-' . self::VIDEO_JS_VERSION . '/video-js.swf"</script>';
 
             if (isset($this->settings['videoJsCdn']) && $this->settings['videoJsCdn']) {
                 $css = '//vjs.zencdn.net/' . self::VIDEO_JS_VERSION . '/video-js.css';
@@ -255,7 +255,7 @@ class VideoplayerController extends ActionController
 
             $this->addHeader('<link href="' . $css . '" type="text/css" rel="stylesheet" media="screen" />');
             $this->addHeader('<script src="' . $javaScript . '" type="text/javascript"></script>');
-            $this->addHeader('<script src="' . $folder . 'videojs-youtube-2.4.0/dist/Youtube.min.js" type="text/javascript"></script>');
+            $this->addHeader('<script src="' . $folder . 'videojs-youtube-2.4.1/dist/Youtube.min.js" type="text/javascript"></script>');
             if (Div::featureEnable('vimeo')) {
                 $this->addHeader('<script src="' . $folder . 'videojs-vimeo-master-2017-09-11/dist/videojs-vimeo.min.js" type="text/javascript"></script>');
             }
