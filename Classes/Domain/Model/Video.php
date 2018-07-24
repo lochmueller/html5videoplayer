@@ -135,6 +135,13 @@ class Video extends AbstractEntity
     protected $autoplayvideo;
 
     /**
+     * Mute the video
+     *
+     * @var boolean
+     */
+    protected $mutevideo;
+
+    /**
      * Loop the video
      *
      * @var boolean
@@ -446,6 +453,26 @@ class Video extends AbstractEntity
     public function getLoopvideo()
     {
         return (boolean)$this->loopvideo;
+    }
+
+    /**
+     * Set the mute of the Video
+     *
+     * @param boolean $mutevideo
+     */
+    public function setMutevideo($mutevideo)
+    {
+        $this->mutevideo = $mutevideo;
+    }
+
+    /**
+     * Returns the $mutevideo
+     *
+     * @return boolean
+     */
+    public function getMutevideo()
+    {
+        return (boolean)$this->mutevideo;
     }
 
     /**

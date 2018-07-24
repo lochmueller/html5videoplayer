@@ -27,7 +27,7 @@ $tca = [
         'iconfile'                 => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('html5videoplayer') . 'Resources/Public/Icons/Video.png',
     ],
     'interface' => [
-        'showRecordFieldList' => 'sys_language_uid,l10n_parent,l10n_diffsource,hidden,starttime,endtime,fe_group,title,posterimage,mp4source,webmsource,oggsource,height,width,downloadlinks,supportvideojs,preloadvideo,autoplayvideo,loopvideo'
+        'showRecordFieldList' => 'sys_language_uid,l10n_parent,l10n_diffsource,hidden,starttime,endtime,fe_group,title,posterimage,mp4source,webmsource,oggsource,height,width,downloadlinks,supportvideojs,preloadvideo,autoplayvideo, mutevideo,loopvideo'
     ],
     'columns'   => [
         'sys_language_uid' => [
@@ -303,6 +303,13 @@ $tca = [
                 'type' => 'check',
             ]
         ],
+        'mutevideo'    => [
+            'exclude' => 1,
+            'label'   => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:tx_html5videoplayer_domain_model_video.mutevideo',
+            'config'  => [
+                'type' => 'check',
+            ]
+        ],
         'loopvideo'        => [
             'exclude' => 1,
             'label'   => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:tx_html5videoplayer_domain_model_video.loopvideo',
@@ -365,7 +372,7 @@ $tca = [
         ],
     ],
     'types'     => [
-        '0' => ['showitem' => '--div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:video,title;;1,width, height,posterimage, mp4source, webmsource, oggsource, youtube,--div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:configurations, downloadlinks, supportvideojs, preloadvideo, autoplayvideo, loopvideo, video_starttime, controlsvideo, --div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:description, description;;;richtext:rte_transform[flag=rte_enabled|mode=ts_css]']
+        '0' => ['showitem' => '--div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:video,title;;1,width, height,posterimage, mp4source, webmsource, oggsource, youtube,--div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:configurations, downloadlinks, supportvideojs, preloadvideo, autoplayvideo, mutevideo, loopvideo, video_starttime, controlsvideo, --div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:description, description;;;richtext:rte_transform[flag=rte_enabled|mode=ts_css]']
 
     ],
     'palettes'  => [
@@ -375,7 +382,7 @@ $tca = [
 ];
 
 if (\HVP\Html5videoplayer\Div::featureEnable('vimeo')) {
-    $tca['types']['0'] = ['showitem' => '--div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:video,title;;1,width, height,posterimage, mp4source, webmsource, oggsource, youtube,vimeo,--div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:configurations, downloadlinks, supportvideojs, preloadvideo, autoplayvideo, loopvideo, video_starttime, controlsvideo, --div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:description, description;;;richtext:rte_transform[flag=rte_enabled|mode=ts_css]'];
+    $tca['types']['0'] = ['showitem' => '--div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:video,title;;1,width, height,posterimage, mp4source, webmsource, oggsource, youtube,vimeo,--div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:configurations, downloadlinks, supportvideojs, preloadvideo, autoplayvideo, mutevideo, loopvideo, video_starttime, controlsvideo, --div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:description, description;;;richtext:rte_transform[flag=rte_enabled|mode=ts_css]'];
 }
 
 return $tca;

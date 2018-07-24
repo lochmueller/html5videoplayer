@@ -30,6 +30,7 @@ CREATE TABLE tx_html5videoplayer_domain_model_video (
 	supportvideojs tinyint(3) DEFAULT '0' NOT NULL,
 	preloadvideo tinytext,
 	autoplayvideo tinyint(3) DEFAULT '0' NOT NULL,
+	mutevideo tinyint(3) DEFAULT '0' NOT NULL,
 	loopvideo tinyint(3) DEFAULT '0' NOT NULL,
 	controlsvideo tinyint(3) DEFAULT '0' NOT NULL,
 	video_starttime int(11) DEFAULT '0' NOT NULL,
