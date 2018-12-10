@@ -46,7 +46,7 @@ class VimeoProcessDatamap
                     $matches
                 )) {
                     $videoId = $matches[3];
-                    $videoData = unserialize(GeneralUtility::getUrl('http://vimeo.com/api/v2/video/' . $videoId . '.php'));
+                    $videoData = unserialize(GeneralUtility::getUrl('https://vimeo.com/api/v2/video/' . $videoId . '.php'));
 
                     if (is_array($videoData)) {
                         // We're only interested in index zero.
