@@ -22,14 +22,13 @@
   ],
   "require": {
     "php": ">=7.0.0",
-    "typo3/cms-core": "~8.7||~9.5||dev-master"
+    "typo3/cms-core": "~8.7||~9.5"
   },
   "replace": {
-    "html5videoplayer": "self.version",
     "typo3-ter/html5videoplayer": "self.version"
   },
   "homepage": "https://github.com/lochmueller/html5videoplayer",
-  "license": "GPL-2.0+",
+  "license": "GPL-2.0-or-later",
   "support": {
     "issues": "https://github.com/lochmueller/html5videoplayer/issues"
   },
