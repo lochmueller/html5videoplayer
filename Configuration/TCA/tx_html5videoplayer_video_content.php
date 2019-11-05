@@ -9,7 +9,7 @@ return [
         'title'     => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:video_relation',
         'hideTable' => true,
         'sortby'    => 'sorting',
-        'iconfile'  => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('html5videoplayer') . 'Resources/Public/Icons/VideoContent.png',
+        'iconfile'  => 'EXT:html5videoplayer/Resources/Public/Icons/VideoContent.png',
     ],
     'interface' => [
         'showRecordFieldList' => 'content_uid,video_uid'

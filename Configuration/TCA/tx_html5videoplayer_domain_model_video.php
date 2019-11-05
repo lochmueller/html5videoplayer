@@ -24,7 +24,7 @@ $tca = [
             'endtime'   => 'endtime',
             'fe_group'  => 'fe_group',
         ],
-        'iconfile'                 => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('html5videoplayer') . 'Resources/Public/Icons/Video.png',
+        'iconfile'                 => 'EXT:html5videoplayer/Resources/Public/Icons/Video.png',
     ],
     'interface' => [
         'showRecordFieldList' => 'sys_language_uid,l10n_parent,l10n_diffsource,hidden,starttime,endtime,fe_group,title,posterimage,mp4source,webmsource,oggsource,height,width,downloadlinks,supportvideojs,preloadvideo,autoplayvideo, mutevideo,loopvideo'
@@ -86,9 +86,10 @@ $tca = [
             'label'   => 'LLL:EXT:lang/locallang_general.xml:LGL.endtime',
             'config'  => [
                 'type'     => 'input',
-                'size'     => '8',
-                'max'      => '20',
+                'size'     => 8,
+                'max'      => 20,
                 'eval'     => 'date',
+                'renderType' => 'inputDateTime',
                 'checkbox' => '0',
                 'default'  => '0',
                 'range'    => [
@@ -103,7 +104,7 @@ $tca = [
             'label'   => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:tx_html5videoplayer_domain_model_video.title',
             'config'  => [
                 'type' => 'input',
-                'size' => '30',
+                'size' => 30,
                 // 'eval' => 'required',
             ]
         ],
@@ -112,26 +113,11 @@ $tca = [
             'label'   => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:tx_html5videoplayer_domain_model_video.posterimage',
             'config'  => [
                 'type'     => 'input',
-                'size'     => '100',
-                'max'      => '255',
+                'renderType' => 'inputLink',
+                'size'     => 100,
+                'max'      => 255,
                 'checkbox' => '',
                 'eval'     => 'trim',
-                'wizards'  => [
-                    '_PADDING' => 2,
-                    'link'     => [
-                        'type'         => 'popup',
-                        'title'        => 'Link',
-                        'icon'         => 'link_popup.gif',
-                        'module'       => [
-                            'name'          => 'wizard_element_browser',
-                            'urlParameters' => [
-                                'mode' => 'wizard',
-                                'act'  => 'file'
-                            ]
-                        ],
-                        'JSopenParams' => 'height=300,width=500,status=0,menubar=0,scrollbars=1'
-                    ]
-                ]
             ]
         ],
         'mp4source'        => [
@@ -139,26 +125,11 @@ $tca = [
             'label'   => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:tx_html5videoplayer_domain_model_video.mp4source',
             'config'  => [
                 'type'     => 'input',
-                'size'     => '100',
-                'max'      => '255',
+                'renderType' => 'inputLink',
+                'size'     => 100,
+                'max'      => 255,
                 'checkbox' => '',
                 'eval'     => 'trim',
-                'wizards'  => [
-                    '_PADDING' => 2,
-                    'link'     => [
-                        'type'         => 'popup',
-                        'title'        => 'Link',
-                        'icon'         => 'link_popup.gif',
-                        'module'       => [
-                            'name'          => 'wizard_element_browser',
-                            'urlParameters' => [
-                                'mode' => 'wizard',
-                                'act'  => 'file'
-                            ]
-                        ],
-                        'JSopenParams' => 'height=300,width=500,status=0,menubar=0,scrollbars=1'
-                    ]
-                ]
             ]
         ],
         'webmsource'       => [
@@ -166,26 +137,11 @@ $tca = [
             'label'   => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:tx_html5videoplayer_domain_model_video.webmsource',
             'config'  => [
                 'type'     => 'input',
-                'size'     => '100',
-                'max'      => '255',
+                'renderType' => 'inputLink',
+                'size'     => 100,
+                'max'      => 255,
                 'checkbox' => '',
                 'eval'     => 'trim',
-                'wizards'  => [
-                    '_PADDING' => 2,
-                    'link'     => [
-                        'type'         => 'popup',
-                        'title'        => 'Link',
-                        'icon'         => 'link_popup.gif',
-                        'module'       => [
-                            'name'          => 'wizard_element_browser',
-                            'urlParameters' => [
-                                'mode' => 'wizard',
-                                'act'  => 'file'
-                            ]
-                        ],
-                        'JSopenParams' => 'height=300,width=500,status=0,menubar=0,scrollbars=1'
-                    ]
-                ]
             ]
         ],
         'youtube'          => [
@@ -193,26 +149,11 @@ $tca = [
             'label'   => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:tx_html5videoplayer_domain_model_video.youtube',
             'config'  => [
                 'type'     => 'input',
-                'size'     => '100',
-                'max'      => '255',
+                'renderType' => 'inputLink',
+                'size'     => 100,
+                'max'      => 255,
                 'checkbox' => '',
                 'eval'     => 'trim',
-                'wizards'  => [
-                    '_PADDING' => 2,
-                    'link'     => [
-                        'type'         => 'popup',
-                        'title'        => 'Link',
-                        'icon'         => 'link_popup.gif',
-                        'module'       => [
-                            'name'          => 'wizard_element_browser',
-                            'urlParameters' => [
-                                'mode' => 'wizard',
-                                'act'  => 'file'
-                            ]
-                        ],
-                        'JSopenParams' => 'height=300,width=500,status=0,menubar=0,scrollbars=1'
-                    ]
-                ]
             ]
         ],
         'oggsource'        => [
@@ -220,26 +161,11 @@ $tca = [
             'label'   => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:tx_html5videoplayer_domain_model_video.oggsource',
             'config'  => [
                 'type'     => 'input',
-                'size'     => '100',
-                'max'      => '255',
+                'renderType' => 'inputLink',
+                'size'     => 100,
+                'max'      => 255,
                 'checkbox' => '',
                 'eval'     => 'trim',
-                'wizards'  => [
-                    '_PADDING' => 2,
-                    'link'     => [
-                        'type'         => 'popup',
-                        'title'        => 'Link',
-                        'icon'         => 'link_popup.gif',
-                        'module'       => [
-                            'name'          => 'wizard_element_browser',
-                            'urlParameters' => [
-                                'mode' => 'wizard',
-                                'act'  => 'file'
-                            ]
-                        ],
-                        'JSopenParams' => 'height=300,width=500,status=0,menubar=0,scrollbars=1'
-                    ]
-                ]
             ]
         ],
         'height'           => [
@@ -348,26 +274,11 @@ $tca = [
             'label'   => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:tx_html5videoplayer_domain_model_video.vimeo',
             'config'  => [
                 'type'     => 'input',
-                'size'     => '100',
-                'max'      => '255',
+                'renderType' => 'inputLink',
+                'size'     => 100,
+                'max'      => 255,
                 'checkbox' => '',
                 'eval'     => 'trim',
-                'wizards'  => [
-                    '_PADDING' => 2,
-                    'link'     => [
-                        'type'         => 'popup',
-                        'title'        => 'Link',
-                        'icon'         => 'link_popup.gif',
-                        'module'       => [
-                            'name'          => 'wizard_element_browser',
-                            'urlParameters' => [
-                                'mode' => 'wizard',
-                                'act'  => 'file'
-                            ]
-                        ],
-                        'JSopenParams' => 'height=300,width=500,status=0,menubar=0,scrollbars=1'
-                    ]
-                ]
             ],
         ],
     ],

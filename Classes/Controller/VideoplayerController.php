@@ -12,7 +12,7 @@ namespace HVP\Html5videoplayer\Controller;
 
 use HVP\Html5videoplayer\Div;
 use HVP\Html5videoplayer\Domain\Model\Video;
-use TYPO3\CMS\Core\Database\DatabaseConnection;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
@@ -302,23 +302,20 @@ class VideoplayerController extends ActionController
     protected function getVideoIdsByContentUid($uid)
     {
         $uids = [];
-        $res = $this->getDatabase()
-            ->exec_SELECTquery('video_uid', 'tx_html5videoplayer_video_content', 'content_uid=' . intval($uid), '', 'sorting');
-        while ($row = $this->getDatabase()
-            ->sql_fetch_assoc($res)) {
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_html5videoplayer_video_content');
+        $where = [
+            $queryBuilder->expr()->eq('content_uid', (int)$uid)
+        ];
+        $rows = (array)$queryBuilder->select('video_uid')
+            ->from('tx_html5videoplayer_video_content')
+            ->where(...$where)
+            ->orderBy('sorting')
+            ->execute()
+            ->fetchAll();
+        foreach ($rows as $row) {
             $uids[] = (int)$row['video_uid'];
         }
         return $uids;
-    }
-
-    /**
-     * Database object
-     *
-     * @return DatabaseConnection
-     */
-    protected function getDatabase()
-    {
-        return $GLOBALS['TYPO3_DB'];
     }
 
     /**
