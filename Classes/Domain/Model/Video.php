@@ -493,6 +493,8 @@ class Video extends AbstractEntity
             $media = $media . '?api=1';
         }
 
+        $media = urldecode($media);
+
         // Get the path relative to the page currently outputted
         if (substr($media, 0, 5) === "file:") {
             $fileUid = substr($media, 5);
@@ -551,7 +553,7 @@ class Video extends AbstractEntity
             return $media;
         }
 
-        throw new \Exception('You are running TYPO3 > CMS 7.2. Please install the mediace extension', 12367238462384);
+        throw new \Exception('Could not fetch the URL in the right way', 12367238462384);
     }
 
     /**
