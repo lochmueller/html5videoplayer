@@ -5,7 +5,7 @@ if (!defined('TYPO3_MODE')) {
 }
 return [
     'ctrl'      => [
-        'label'     => 'Video/Content Relation',
+        // 'label'     => 'Video/Content Relation',
         'title'     => 'LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xml:video_relation',
         'hideTable' => true,
         'sortby'    => 'sorting',
