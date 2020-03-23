@@ -25,14 +25,17 @@
 
 namespace HVP\Html5videoplayer\Domain\Model;
 
-use HVP\Html5videoplayer\Div;
-use TYPO3\CMS\Core\Resource\FileInterface;
-use TYPO3\CMS\Core\Resource\ResourceFactory;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\MathUtility;
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
-use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+use \FoT3\Mediace\MediaWizard\MediaWizardProviderManager;
+use \HVP\Html5videoplayer\Div;
+use \TYPO3\CMS\Core\Core\Environment;
+use \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
+use \TYPO3\CMS\Core\Resource\FileInterface;
+use \TYPO3\CMS\Core\Resource\ResourceFactory;
+use \TYPO3\CMS\Core\Utility\GeneralUtility;
+use \TYPO3\CMS\Core\Utility\MathUtility;
+use \TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+use \TYPO3\CMS\Frontend\Resource\FilePathSanitizer;
 
 /**
  * Report Object
@@ -46,7 +49,7 @@ class Video extends AbstractEntity
      * The title of the Video
      *
      * @var string
-     * @validate StringLength(minimum = 1)
+     * @TYPO3\CMS\Extbase\Annotation\Validate("StringLength", options={"minimum": 1})
      */
     protected $title;
 
@@ -156,13 +159,11 @@ class Video extends AbstractEntity
     protected $videoStarttime;
 
     /**
-     *
      * @var boolean
      */
     protected $controlsvideo;
 
     /**
-     *
      * @var string
      */
     protected $youtube;
@@ -404,7 +405,6 @@ class Video extends AbstractEntity
     }
 
     /**
-     *
      * @return boolean
      */
     public function getControlsvideo()
@@ -413,7 +413,6 @@ class Video extends AbstractEntity
     }
 
     /**
-     *
      * @param boolean $controlsvideo
      */
     public function setControlsvideo($controlsvideo)
@@ -422,7 +421,6 @@ class Video extends AbstractEntity
     }
 
     /**
-     *
      * @return string
      */
     public function getDescription()
@@ -431,7 +429,6 @@ class Video extends AbstractEntity
     }
 
     /**
-     *
      * @param string $description
      */
     public function setDescription($description)
@@ -479,8 +476,8 @@ class Video extends AbstractEntity
      * Resolves the URL of an file
      *
      * @param $media
-     *
      * @return null|string
+     * @throws FileDoesNotExistException
      */
     protected function retrieveMediaUrl($media)
     {
@@ -490,13 +487,13 @@ class Video extends AbstractEntity
 
         // Quick-fix for the Vimeo api (add "?api=1" to the media address)
         if (strpos($media, 'vimeo.com') !== false) {
-            $media = $media . '?api=1';
+            $media .= '?api=1';
         }
 
         $media = urldecode($media);
 
         // Get the path relative to the page currently outputted
-        if (substr($media, 0, 5) === "file:") {
+        if (strpos($media, "file:") === 0) {
             $fileUid = substr($media, 5);
 
             if (MathUtility::canBeInterpretedAsInteger($fileUid)) {
@@ -524,20 +521,12 @@ class Video extends AbstractEntity
             ));
         }
 
-        //
-
-        if (is_file(PATH_site . $media)) {
-            return $GLOBALS['TSFE']->tmpl->getFileName($media);
+        if (is_file(Environment::getPublicPath() . '/' . $media)) {
+            $filePathSanitizer = GeneralUtility::makeInstance(FilePathSanitizer::class);
+            return $filePathSanitizer->sanitize($media);
         }
 
-        $mediaWizard = null;
-        if (class_exists(\TYPO3\CMS\Mediace\MediaWizard\MediaWizardProviderManager::class)) {
-            // 7.2
-            $mediaWizard = \TYPO3\CMS\Mediace\MediaWizard\MediaWizardProviderManager::getValidMediaWizardProvider($media);
-        } elseif (class_exists(\TYPO3\CMS\Frontend\MediaWizard\MediaWizardProviderManager::class)) {
-            // before 7.2
-            $mediaWizard = \TYPO3\CMS\Frontend\MediaWizard\MediaWizardProviderManager::getValidMediaWizardProvider($media);
-        }
+        $mediaWizard = MediaWizardProviderManager::getValidMediaWizardProvider($media);
         if ($mediaWizard !== null) {
             $cObj = new ContentObjectRenderer();
             return $cObj->typoLink_URL([
@@ -553,7 +542,7 @@ class Video extends AbstractEntity
             return $media;
         }
 
-        throw new \Exception('Could not fetch the URL in the right way', 12367238462384);
+        throw new \RuntimeException('Could not fetch the URL in the right way', 12367238462384);
     }
 
     /**

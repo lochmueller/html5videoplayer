@@ -25,7 +25,8 @@
 
 namespace HVP\Html5videoplayer\Domain\Repository;
 
-use TYPO3\CMS\Extbase\Persistence\Repository;
+use \TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use \TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
  * Repository for Tx_Hettich_Domain_Repository_Exposition
@@ -40,9 +41,9 @@ class VideoRepository extends Repository
     /**
      * All Queries withoud storagePID
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\QueryInterface
+     * @return QueryInterface
      */
-    public function createQuery()
+    public function createQuery(): QueryInterface
     {
         $query = parent::createQuery();
         $query->getQuerySettings()
@@ -55,7 +56,6 @@ class VideoRepository extends Repository
      * Find Video and respect hidden
      *
      * @param $uid
-     *
      * @return object
      */
     public function findByUidHidden($uid)
@@ -67,9 +67,7 @@ class VideoRepository extends Repository
     }
 
     /**
-     *
      * @param array $uids
-     *
      * @return array
      */
     public function findByUids(array $uids = [])

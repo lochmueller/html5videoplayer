@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2020-03-20T10:37:48Z"
+		  product-name="html5videoplayer">
+		<header/>
+		<body>
+			<trans-unit id="video">
+				<source>Video</source>
+				<target>Video</target>
+			</trans-unit>
+			<trans-unit id="videos">
+				<source>Videos</source>
+				<target>Videos</target>
+			</trans-unit>
+			<trans-unit id="description">
+				<source>Description</source>
+				<target>Beschreibung</target>
+			</trans-unit>
+			<trans-unit id="configurations">
+				<source>Configurations</source>
+				<target>Einstellungen</target>
+			</trans-unit>
+			<trans-unit id="video_relation">
+				<source>Video relation</source>
+				<target>Video Verknüpfung</target>
+			</trans-unit>
+			<trans-unit id="fce.config">
+				<source>Configuration</source>
+				<target>Einstellung</target>
+			</trans-unit>
+			<trans-unit id="fce.skin">
+				<source>Skin</source>
+				<target>Aussehen</target>
+			</trans-unit>
+			<trans-unit id="fce.skin.ts">
+				<source>via TypoScript</source>
+				<target>via TypoScript</target>
+			</trans-unit>
+			<trans-unit id="fce.skin.default">
+				<source>Default</source>
+				<target>Standard</target>
+			</trans-unit>
+			<trans-unit id="fce.skin.vim">
+				<source>vim</source>
+				<target>vim</target>
+			</trans-unit>
+			<trans-unit id="fce.skin.hu">
+				<source>hu</source>
+				<target>hu</target>
+			</trans-unit>
+			<trans-unit id="fce.skin.tube">
+				<source>tube</source>
+				<target>tube</target>
+			</trans-unit>
+			<trans-unit id="ff.videowidth">
+				<source>Video width (overwrite)</source>
+				<target>Videobreite (überschreiben)</target>
+			</trans-unit>
+			<trans-unit id="ff.videoheight">
+				<source>Video height (overwrite)</source>
+				<target>Videohöhe (überschreiben)</target>
+			</trans-unit>
+			<trans-unit id="list_title">
+				<source>HTML5 Video Player</source>
+				<target>HTML5 Video Player</target>
+			</trans-unit>
+			<trans-unit id="list_plus_wiz_description">
+				<source>Add a HTML5 Video Player to show movies from your movie database</source>
+				<target>Ermöglicht die Wiedergabe von Playlisten und Videos aus der Videodatenbank mit einem HTML5-Videoplayer.</target>
+			</trans-unit>
+			<trans-unit id="more.videos">
+				<source>More videos</source>
+				<target>Mehr Videos</target>
+			</trans-unit>
+			<trans-unit id="back">
+				<source>back</source>
+				<target>zurück</target>
+			</trans-unit>
+			<trans-unit id="tt_content.list_type_pi1">
+				<source>HTML5 Video Player</source>
+				<target>HTML5 Video Player</target>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video">
+				<source>Video</source>
+				<target>Video</target>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.title">
+				<source>Title</source>
+				<target>Titel</target>
+			</trans-unit>
+			<trans-unit id="tt_content.tx_html5videoplayer_videos">
+				<source>Videos</source>
+				<target>Videos</target>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.posterimage">
+				<source>Poster Image</source>
+				<target>Vorschau Bild</target>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.mp4source">
+				<source>MP4 Source</source>
+				<target>MP4 Quelle</target>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.webmsource">
+				<source>WebM Source</source>
+				<target>WebM Quelle</target>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.youtube">
+				<source>YouTube</source>
+				<target>YouTube</target>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.vimeo">
+				<source>Vimeo</source>
+				<target>Vimeo</target>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.oggsource">
+				<source>Ogg Source</source>
+				<target>Ogg Quelle</target>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.height">
+				<source>Height</source>
+				<target>Höhe</target>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.width">
+				<source>Width</source>
+				<target>Breite</target>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.downloadlinks">
+				<source>Download Links</source>
+				<target>Download Links</target>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.supportvideojs">
+				<source>Support VideoJS</source>
+				<target>VideoJS unterstützen</target>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.preloadvideo">
+				<source>Preload Video</source>
+				<target>Video vorladen</target>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.autoplayvideo">
+				<source>Autoplay Video</source>
+				<target>Video automatisch abspielen</target>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.mutevideo">
+				<source>Mute Video</source>
+				<target>Video Stummschalten</target>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.loopvideo">
+				<source>Loop Video</source>
+				<target>Video automatisch wiederholen</target>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.video_starttime">
+				<source>Start time of video (in s)</source>
+				<target>Startzeit des Videos (in s)</target>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.controlsvideo">
+				<source>Video Controls</source>
+				<target>Video Controls</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

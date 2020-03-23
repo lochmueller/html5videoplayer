@@ -10,16 +10,21 @@
 
 namespace HVP\Html5videoplayer\Controller;
 
-use HVP\Html5videoplayer\Div;
-use HVP\Html5videoplayer\Domain\Model\Video;
-use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\HttpUtility;
-use TYPO3\CMS\Extbase\Configuration\FrontendConfigurationManager;
-use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
+use \HVP\Html5videoplayer\Div;
+use \HVP\Html5videoplayer\Domain\Model\Video;
+use \TYPO3\CMS\Core\Database\ConnectionPool;
+use \TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use \TYPO3\CMS\Core\Utility\GeneralUtility;
+use \TYPO3\CMS\Core\Utility\HttpUtility;
+use TYPO3\CMS\Core\Utility\PathUtility;
+use \TYPO3\CMS\Extbase\Configuration\FrontendConfigurationManager;
+use \TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
+use \TYPO3\CMS\Extbase\Mvc\Web\Response;
+use \TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
+use \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException;
+use \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException;
+use \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
  * Abstract Command Controller
@@ -40,7 +45,7 @@ class VideoplayerController extends ActionController
      * The video repository
      *
      * @var \HVP\Html5videoplayer\Domain\Repository\VideoRepository
-     * @inject
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $videoRepository;
 
@@ -60,8 +65,10 @@ class VideoplayerController extends ActionController
 
     /**
      * Init the actions
+     *
+     * @return void
      */
-    public function initializeAction()
+    public function initializeAction(): void
     {
         $this->configuration = $this->settings['videoplayer'];
 
@@ -69,25 +76,30 @@ class VideoplayerController extends ActionController
         /** @var FrontendConfigurationManager $feConfigManager */
         $feConfigManager = GeneralUtility::makeInstance(FrontendConfigurationManager::class);
         $typoScript = $feConfigManager->getTypoScriptSetup();
-        if (isset($typoScript['config.']['xhtml_cleaning']) && in_array(trim($typoScript['config.']['xhtml_cleaning']), [
-                'all',
-                'cached',
-                'output'
-            ])
+        if (isset($typoScript['config.']['xhtml_cleaning']) && in_array(trim($typoScript['config.']['xhtml_cleaning']),
+                [
+                    'all',
+                    'cached',
+                    'output'
+                ])
         ) {
             die('HTML5 Video Player: You have enabled the xhtml_cleaning in your configuration. This will destroy the serialze field in the flash fallback. Please disable the xhtml_cleaning-feature (current value: "' . trim($typoScript['config.']['xhtml_cleaning']) . '") in the TYPO3 TypoScript configuration.');
         }
 
-        // Check Static include
+        /* Check Static include */
         if (!@is_array($typoScript['plugin.']['tx_html5videoplayer.']['view.'])) {
             die('HTML5 Video Player: You have to include the static extension Template of the html5videoplayer.');
         }
     }
 
     /**
-     * controll the list action
+     * control the list action
+     *
+     * @return void
+     * @throws InvalidSlotException
+     * @throws InvalidSlotReturnException
      */
-    public function listAction()
+    public function listAction(): void
     {
         $this->loadHeaderData();
 
@@ -105,7 +117,7 @@ class VideoplayerController extends ActionController
      *
      * @return array
      */
-    protected function getCurrentVideos()
+    protected function getCurrentVideos(): array
     {
         $contentObject = $this->configurationManager->getContentObject();
         $contentElement = $contentObject->data;
@@ -126,7 +138,8 @@ class VideoplayerController extends ActionController
         } elseif (isset($contentElement[0]) && !is_array(isset($contentElement[0]))) { // Fluid cObject data
             $videos = $this->videoRepository->findByUids(GeneralUtility::trimExplode(',', $contentElement[0], true));
         } elseif (trim($this->configuration['videos']) != '') { // TypoScript
-            $videos = $this->videoRepository->findByUids(GeneralUtility::trimExplode(',', $this->configuration['videos'], true));
+            $videos = $this->videoRepository->findByUids(GeneralUtility::trimExplode(',',
+                $this->configuration['videos'], true));
         }
 
         return $videos;
@@ -134,30 +147,33 @@ class VideoplayerController extends ActionController
 
     /**
      * Render the overview action
+     *
+     * @return void
+     * @throws StopActionException
+     * @throws InvalidSlotException
+     * @throws InvalidSlotReturnException
      */
-    public function overviewAction()
+    public function overviewAction(): void
     {
         $videos = $this->getCurrentVideos();
 
-        // Skip Ovewview
-        if (isset($this->settings['skipOverview']) && $this->settings['skipOverview']) {
-            if (sizeof($videos)) {
-                $ident = 0;
-                if ($this->settings['skipOverview'] == 'random') {
-                    $ident = rand(0, sizeof($videos) - 1);
-                }
+        /* Skip Ovewview */
+        if (isset($this->settings['skipOverview']) && $this->settings['skipOverview'] && count($videos)) {
+            $ident = 0;
+            if ($this->settings['skipOverview'] === 'random') {
+                $ident = random_int(0, count($videos) - 1);
+            }
 
-                $arguments = ['video' => $videos[$ident]];
-                $uri = $this->uriBuilder->reset()
-                    ->setCreateAbsoluteUri(true)
-                    ->uriFor('detail', $arguments);
-                if ($this->settings['skipOverviewMode'] == 'forward') {
-                    $this->getTyposcriptFrontendController()
-                        ->set_no_cache('HTML5VideoPlayer is in forward mode in the overview');
-                    $this->forward('detail', null, null, $arguments);
-                } else {
-                    HttpUtility::redirect($uri);
-                }
+            $arguments = ['video' => $videos[$ident]];
+            $uri = $this->uriBuilder->reset()
+                ->setCreateAbsoluteUri(true)
+                ->uriFor('detail', $arguments);
+            if ($this->settings['skipOverviewMode'] == 'forward') {
+                $this->getTyposcriptFrontendController()
+                    ->set_no_cache('HTML5VideoPlayer is in forward mode in the overview');
+                $this->forward('detail', null, null, $arguments);
+            } else {
+                HttpUtility::redirect($uri);
             }
         }
 
@@ -174,8 +190,11 @@ class VideoplayerController extends ActionController
      * Render the detail action
      *
      * @param Video $video
+     * @return void
+     * @throws InvalidSlotException
+     * @throws InvalidSlotReturnException
      */
-    public function detailAction(Video $video)
+    public function detailAction(Video $video): void
     {
         $this->loadHeaderData();
         $videos = $this->getCurrentVideos();
@@ -193,7 +212,7 @@ class VideoplayerController extends ActionController
         }
 
         $variables = [
-            'videos'       => $videos,
+            'videos' => $videos,
             'currentVideo' => $video
         ];
 
@@ -207,7 +226,7 @@ class VideoplayerController extends ActionController
      *
      * @return Dispatcher
      */
-    protected function getSignalSlotDispatcher()
+    protected function getSignalSlotDispatcher(): Dispatcher
     {
         return $this->objectManager->get(Dispatcher::class);
     }
@@ -215,12 +234,11 @@ class VideoplayerController extends ActionController
     /**
      * Move the Array elements by the given number
      *
-     * @param array   $array
+     * @param array $array
      * @param integer $move
-     *
      * @return array
      */
-    protected function arrayMoveRight($array, $move)
+    protected function arrayMoveRight($array, $move): array
     {
         if ($move < 0) {
             for (; $move < 0; $move++) {
@@ -236,8 +254,10 @@ class VideoplayerController extends ActionController
 
     /**
      * Load the headerData
+     *
+     * @return void
      */
-    protected function loadHeaderData()
+    protected function loadHeaderData(): void
     {
         if (!self::$includeHeader && $this->settings['skipHtmlHeaderInformation'] != 1) {
             $folder = $this->getResourceFolder();
@@ -266,15 +286,15 @@ class VideoplayerController extends ActionController
      *
      * @return string
      */
-    protected function getResourceFolder()
+    protected function getResourceFolder(): string
     {
         $folder = $this->settings['resourceFolder'];
 
-        if (substr($folder, 0, 4) == 'EXT:') {
-            list($extKey, $local) = explode('/', substr($folder, 4), 2);
+        if (strpos($folder, 'EXT:') === 0) {
+            [$extKey, $local] = explode('/', substr($folder, 4), 2);
             $folder = '';
             if (strcmp($extKey, '') && ExtensionManagementUtility::isLoaded($extKey) && strcmp($local, '')) {
-                $folder = ExtensionManagementUtility::siteRelPath($extKey) . $local;
+                $folder = PathUtility::stripPathSitePrefix(ExtensionManagementUtility::extPath($extKey)) . $local;
             }
         }
         return $folder;
@@ -284,10 +304,11 @@ class VideoplayerController extends ActionController
      * Add a HTML header
      *
      * @param string $header
+     * @return void
      */
-    protected function addHeader($header)
+    protected function addHeader($header): void
     {
-        /** @var \TYPO3\CMS\Extbase\Mvc\Web\Response $response */
+        /** @var Response $response */
         $response = &$this->response;
         $response->addAdditionalHeaderData($header);
     }
@@ -296,10 +317,9 @@ class VideoplayerController extends ActionController
      * Get the video IDs by the given Content uid
      *
      * @param integer $uid
-     *
      * @return array
      */
-    protected function getVideoIdsByContentUid($uid)
+    protected function getVideoIdsByContentUid($uid): array
     {
         $uids = [];
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_html5videoplayer_video_content');
@@ -323,7 +343,7 @@ class VideoplayerController extends ActionController
      *
      * @return TyposcriptFrontendController
      */
-    protected function getTyposcriptFrontendController()
+    protected function getTyposcriptFrontendController(): TypoScriptFrontendController
     {
         return $GLOBALS['TSFE'];
     }

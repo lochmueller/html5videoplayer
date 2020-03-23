@@ -12,7 +12,7 @@
 
 namespace HVP\Html5videoplayer\ViewHelpers\Format;
 
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * Removes tags from the given string (applying PHPs strip_tags() function)

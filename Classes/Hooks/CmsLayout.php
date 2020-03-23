@@ -2,8 +2,8 @@
 
 namespace HVP\Html5videoplayer\Hooks;
 
-use TYPO3\CMS\Core\Database\DatabaseConnection;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use \TYPO3\CMS\Core\Database\ConnectionPool;
+use \TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Render CMS Layout
@@ -18,7 +18,6 @@ class CmsLayout
 
     /**
      * @param array $params
-     *
      * @return string
      */
     public function getExtensionSummary(array $params)
@@ -53,28 +52,32 @@ class CmsLayout
 
     /**
      * @param $uid
-     *
      * @return array|NULL
      */
     protected function getVideosByContentUid($uid)
     {
-        return $this->getDatabaseConnection()
-            ->exec_SELECTgetRows(
-                'tx_html5videoplayer_domain_model_video.*',
-                'tx_html5videoplayer_domain_model_video,tx_html5videoplayer_video_content',
-                'tx_html5videoplayer_domain_model_video.uid = tx_html5videoplayer_video_content.video_uid AND tx_html5videoplayer_domain_model_video.deleted=0 AND tx_html5videoplayer_video_content.content_uid=' . (int)$uid,
-                '',
-                'tx_html5videoplayer_video_content.sorting'
-            );
+        $table = 'tx_html5videoplayer_domain_model_video';
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
+        return $queryBuilder->select('video.*')
+            ->from($table, 'video')
+            ->leftJoin(
+                'video',
+                'tx_html5videoplayer_video_content',
+                'content',
+                $queryBuilder->expr()->eq('video.uid', $queryBuilder->quoteIdentifier('content.video_uid'))
+            )
+            ->where($queryBuilder->expr()->eq('content.content_uid',
+                $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT)))
+            ->orderBy('content.sorting')
+            ->execute()->fetchAll();
     }
 
     /**
      * Get field value from flexform configuration,
      * including checks if flexform configuration is available
      *
-     * @param string $key   name of the key
+     * @param string $key name of the key
      * @param string $sheet name of the sheet
-     *
      * @return string|NULL if nothing found, value if found
      */
     protected function getFieldFromFlexform($key, $sheet = 'sDEF')
@@ -87,13 +90,5 @@ class CmsLayout
             }
         }
         return null;
-    }
-
-    /**
-     * @return DatabaseConnection
-     */
-    protected function getDatabaseConnection()
-    {
-        return $GLOBALS['TYPO3_DB'];
     }
 }
