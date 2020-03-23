@@ -24,10 +24,9 @@ namespace HVP\Html5videoplayer;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  * ************************************************************* */
-use TYPO3\CMS\Core\Localization\Parser\LocallangXmlParser;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Lang\LanguageService;
+
+use \TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use \TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * Class that adds the wizard icon.
@@ -40,48 +39,33 @@ class Wizicon
 {
 
     /**
+     * @var string
+     */
+    protected $extkey = 'html5videoplayer';
+
+    /**
+     * @var string
+     */
+    protected $extParamName = 'html5videoplayer_pivideoplayer';
+
+    /**
      * Processing the wizard items array
      *
-     * @param    array $wizardItems : The wizard items
-     *
-     * @return    array Modified array with wizard items
+     * @param array $wizardItems : The wizard items
+     * @return array Modified array with wizard items
      */
-    public function proc($wizardItems)
+    public function proc($wizardItems): array
     {
-        $LL = $this->includeLocalLang();
-        $wizardItems['plugins_tx_html5videoplayer_pi1'] = [
-            'icon'        => 'EXT:html5videoplayer/Resources/Public/Icons/Wizicon.gif',
-            'title'       => $this->getLanguage()
-                ->getLLL('list_title', $LL),
-            'description' => $this->getLanguage()
-                ->getLLL('list_plus_wiz_description', $LL),
-            'params'      => '&defVals[tt_content][CType]=list&defVals[tt_content][list_type]=html5videoplayer_pivideoplayer'
+        $aKey = 'plugins_tx_html5videoplayer_pi1';
+
+        $wizardItems[$aKey] = [
+            'iconIdentifier' => 'html5videoplayer_icon',
+            'title' => LocalizationUtility::translate('list_title', $this->extkey),
+            'description' => LocalizationUtility::translate('list_plus_wiz_description', $this->extkey),
+            'params' => '&defVals[tt_content][CType]=list&defVals[tt_content][list_type]=' . $this->extParamName
         ];
 
         return $wizardItems;
     }
 
-    /**
-     * Get language service
-     *
-     * @return LanguageService
-     */
-    protected function getLanguage()
-    {
-        return $GLOBALS['LANG'];
-    }
-
-    /**
-     * Reads the [extDir]/locallang.xml and returns the $LOCAL_LANG array found in that file.
-     *
-     * @return  array   The array with language labels
-     */
-    public function includeLocalLang()
-    {
-        $llFile = ExtensionManagementUtility::extPath('html5videoplayer') . '/Resources/Private/Language/locallang.xml';
-        /** @var LocallangXmlParser $parser */
-        $parser = GeneralUtility::makeInstance(LocallangXmlParser::class);
-        $LOCAL_LANG = $parser->getParsedData($llFile, $GLOBALS['LANG']->lang);
-        return $LOCAL_LANG;
-    }
 }

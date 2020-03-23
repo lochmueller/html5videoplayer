@@ -21,8 +21,11 @@
     }
   ],
   "require": {
-    "php": ">=7.0.0",
-    "typo3/cms-core": "~8.7||~9.5"
+    "php": ">=7.1",
+    "typo3/cms-core": "^9.5"
+  },
+  "suggest": {
+    "friendsoftypo3/mediace": "Needed to get MediaWizard working to get media uri"
   },
   "replace": {
     "typo3-ter/html5videoplayer": "self.version"

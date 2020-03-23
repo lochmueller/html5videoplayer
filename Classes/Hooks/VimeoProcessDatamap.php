@@ -2,9 +2,12 @@
 
 namespace HVP\Html5videoplayer\Hooks;
 
-use TYPO3\CMS\Core\Resource\ResourceFactory;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
+use \TYPO3\CMS\Core\Database\ConnectionPool;
+use \TYPO3\CMS\Core\Resource\ResourceFactory;
+use \TYPO3\CMS\Core\Utility\GeneralUtility;
+use \TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
+use \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException;
+use \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException;
 
 /**
  * Class VimeoProcessDatamap
@@ -25,42 +28,48 @@ class VimeoProcessDatamap
      * @param $id
      * @param $fieldArray
      * @param $self
+     * @throws InvalidSlotException
+     * @throws InvalidSlotReturnException
      */
-    public function processDatamap_postProcessFieldArray($status, $table, $id, &$fieldArray, &$self)
+    public function processDatamap_postProcessFieldArray($status, $table, $id, &$fieldArray, &$self): void
     {
 
-        if ($table == 'tx_html5videoplayer_domain_model_video') {
+        if ($table === 'tx_html5videoplayer_domain_model_video') {
             $data = $fieldArray;
-            if ($status == 'update') {
-                $data = array_merge($GLOBALS['TYPO3_DB']->exec_SELECTgetSingleRow(
-                    '*',
-                    'tx_html5videoplayer_domain_model_video',
-                    'uid=' . (int)$id
-                ), $data);
+            if ($status === 'update') {
+                $table = 'tx_html5videoplayer_domain_model_video';
+                $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
+                $res = $queryBuilder->select('*')
+                    ->from($table, 'video')
+                    ->where($queryBuilder->expr()->eq('video.uid',
+                        $queryBuilder->createNamedParameter($id, \PDO::PARAM_INT)))
+                    ->execute()->fetch();
+                $data = array_merge($res, $data);
             }
             $vimeoUrl = $data['vimeo'];
-            if (($status == 'update' || $status == 'new') && $vimeoUrl != '' && GeneralUtility::isValidUrl($vimeoUrl)) {
+            if (($status === 'update' || $status === 'new') && $vimeoUrl !== '' && GeneralUtility::isValidUrl($vimeoUrl)) {
                 if (preg_match(
                     '/https?:\\/\\/(?:www\\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|)(\d+)(?:$|\/|\?)/i',
                     $vimeoUrl,
                     $matches
                 )) {
                     $videoId = $matches[3];
-                    $videoData = unserialize(GeneralUtility::getUrl('https://vimeo.com/api/v2/video/' . $videoId . '.php'));
+                    $url = GeneralUtility::getUrl('https://vimeo.com/api/v2/video/' . $videoId . '.php');
+                    $videoData = unserialize($url, ['allowed_classes' => true]);
 
                     if (is_array($videoData)) {
                         // We're only interested in index zero.
                         $videoData = $videoData[0];
 
-                        if (!isset($data['title']) || trim($data['title']) == '') {
+                        if (!isset($data['title']) || trim($data['title']) === '') {
                             $fieldArray['title'] = $videoData['title'];
                         }
 
-                        if (!isset($data['description']) || trim($data['description']) == '') {
+                        if (!isset($data['description']) || trim($data['description']) === '') {
                             $fieldArray['description'] = $videoData['description'];
                         }
 
-                        if (!isset($data['posterimage']) || trim($data['posterimage']) == '') {
+                        if (!isset($data['posterimage']) || trim($data['posterimage']) === '') {
                             $resourceFactory = ResourceFactory::getInstance();
                             $folder = $resourceFactory->retrieveFileOrFolderObject($this->getUploadFolder());
                             $thumbnailData = GeneralUtility::getUrl($videoData['thumbnail_large']);
@@ -79,8 +88,10 @@ class VimeoProcessDatamap
      * Use the Signal to override the default folder
      *
      * @return string
+     * @throws InvalidSlotException
+     * @throws InvalidSlotReturnException
      */
-    protected function getUploadFolder()
+    protected function getUploadFolder(): string
     {
         /** @var Dispatcher $dispatcher */
         $dispatcher = GeneralUtility::makeInstance(Dispatcher::class);

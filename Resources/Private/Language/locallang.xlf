@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2020-03-20T10:37:48Z"
+		  product-name="html5videoplayer">
+		<header/>
+		<body>
+			<trans-unit id="video">
+				<source>Video</source>
+			</trans-unit>
+			<trans-unit id="videos">
+				<source>Videos</source>
+			</trans-unit>
+			<trans-unit id="description">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="configurations">
+				<source>Configurations</source>
+			</trans-unit>
+			<trans-unit id="video_relation">
+				<source>Video relation</source>
+			</trans-unit>
+			<trans-unit id="fce.config">
+				<source>Configuration</source>
+			</trans-unit>
+			<trans-unit id="fce.skin">
+				<source>Skin</source>
+			</trans-unit>
+			<trans-unit id="fce.skin.ts">
+				<source>via TypoScript</source>
+			</trans-unit>
+			<trans-unit id="fce.skin.default">
+				<source>Default</source>
+			</trans-unit>
+			<trans-unit id="fce.skin.vim">
+				<source>vim</source>
+			</trans-unit>
+			<trans-unit id="fce.skin.hu">
+				<source>hu</source>
+			</trans-unit>
+			<trans-unit id="fce.skin.tube">
+				<source>tube</source>
+			</trans-unit>
+			<trans-unit id="ff.videowidth">
+				<source>Video width (overwrite)</source>
+			</trans-unit>
+			<trans-unit id="ff.videoheight">
+				<source>Video height (overwrite)</source>
+			</trans-unit>
+			<trans-unit id="list_title">
+				<source>HTML5 Video Player</source>
+			</trans-unit>
+			<trans-unit id="list_plus_wiz_description">
+				<source>Add a HTML5 Video Player to show movies from your movie database</source>
+			</trans-unit>
+			<trans-unit id="more.videos">
+				<source>More videos</source>
+			</trans-unit>
+			<trans-unit id="back">
+				<source>back</source>
+			</trans-unit>
+			<trans-unit id="tt_content.list_type_pi1">
+				<source>HTML5 Video Player</source>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video">
+				<source>Video</source>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tt_content.tx_html5videoplayer_videos">
+				<source>Videos</source>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.posterimage">
+				<source>Poster Image</source>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.mp4source">
+				<source>MP4 Source</source>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.webmsource">
+				<source>WebM Source</source>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.youtube">
+				<source>YouTube</source>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.vimeo">
+				<source>Vimeo</source>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.oggsource">
+				<source>Ogg Source</source>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.height">
+				<source>Height</source>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.width">
+				<source>Width</source>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.downloadlinks">
+				<source>Download Links</source>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.supportvideojs">
+				<source>Support VideoJS</source>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.preloadvideo">
+				<source>Preload Video</source>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.autoplayvideo">
+				<source>Autoplay Video</source>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.mutevideo">
+				<source>Mute Video</source>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.loopvideo">
+				<source>Loop Video</source>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.video_starttime">
+				<source>Start time of video (in s)</source>
+			</trans-unit>
+			<trans-unit id="tx_html5videoplayer_domain_model_video.controlsvideo">
+				<source>Video Controls</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
