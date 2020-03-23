@@ -526,7 +526,10 @@ class Video extends AbstractEntity
             return $filePathSanitizer->sanitize($media);
         }
 
-        $mediaWizard = MediaWizardProviderManager::getValidMediaWizardProvider($media);
+        $mediaWizard = null;
+        if (class_exists(MediaWizardProviderManager::class)) {
+            $mediaWizard = MediaWizardProviderManager::getValidMediaWizardProvider($media);
+        }
         if ($mediaWizard !== null) {
             $cObj = new ContentObjectRenderer();
             return $cObj->typoLink_URL([
