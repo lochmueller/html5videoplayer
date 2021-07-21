@@ -22,7 +22,7 @@
   ],
   "require": {
     "php": ">=7.1",
-    "typo3/cms-core": "^9.5"
+    "typo3/cms-core": "^9.5 || ^10.4"
   },
   "suggest": {
     "friendsoftypo3/mediace": "Needed to get MediaWizard working to get media uri"
