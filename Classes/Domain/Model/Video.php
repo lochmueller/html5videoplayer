@@ -521,9 +521,9 @@ class Video extends AbstractEntity
             ));
         }
 
-        if (is_file(Environment::getPublicPath() . '/' . $media)) {
+        if (is_file(Environment::getPublicPath() . '/' . rawurldecode($media))) {
             $filePathSanitizer = GeneralUtility::makeInstance(FilePathSanitizer::class);
-            return $filePathSanitizer->sanitize($media);
+            return $filePathSanitizer->sanitize(rawurldecode($media));
         }
 
         $mediaWizard = null;
