@@ -26,7 +26,6 @@
 namespace HVP\Html5videoplayer\Domain\Model;
 
 use TYPO3\CMS\Extbase\Annotation\Validate;
-use \FoT3\Mediace\MediaWizard\MediaWizardProviderManager;
 use \HVP\Html5videoplayer\Div;
 use \TYPO3\CMS\Core\Core\Environment;
 use \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
@@ -525,17 +524,6 @@ class Video extends AbstractEntity
         if (is_file(Environment::getPublicPath() . '/' . rawurldecode($media))) {
             $filePathSanitizer = GeneralUtility::makeInstance(FilePathSanitizer::class);
             return $filePathSanitizer->sanitize(rawurldecode($media));
-        }
-
-        $mediaWizard = null;
-        if (class_exists(MediaWizardProviderManager::class)) {
-            $mediaWizard = MediaWizardProviderManager::getValidMediaWizardProvider($media);
-        }
-        if ($mediaWizard !== null) {
-            $cObj = new ContentObjectRenderer();
-            return $cObj->typoLink_URL([
-                'parameter' => $mediaWizard->rewriteUrl($media)
-            ]);
         }
 
         if (GeneralUtility::isValidUrl($media)) {
