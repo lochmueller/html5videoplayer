@@ -1,10 +1,15 @@
-<?php /** @noinspection PhpFullyQualifiedNameUsageInspection */
+<?php
+
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use HVP\Html5videoplayer\Div;
+
 defined('TYPO3_MODE') || die();
 
 (static function ($extKey = 'html5videoplayer') {
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin($extKey, 'PiVideoplayer', 'Videoplayer');
+    ExtensionUtility::registerPlugin($extKey, 'PiVideoplayer', 'Videoplayer');
 
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
+    ExtensionManagementUtility::addPiFlexFormValue(
         $extKey . '_pivideoplayer',
         'FILE:EXT:' . $extKey . '/Configuration/FlexForm/Video.xml'
     );
@@ -40,7 +45,7 @@ defined('TYPO3_MODE') || die();
         ],
     ];
 
-    $storageId = \HVP\Html5videoplayer\Div::getGeneralStorageFolder();
+    $storageId = Div::getGeneralStorageFolder();
     if ($storageId) {
         unset($GLOBALS['TCA']['tt_content']['columns']['tx_html5videoplayer_videos']['config']['foreign_selector']);
         unset($GLOBALS['TCA']['tt_content']['columns']['tx_html5videoplayer_videos']['config']['foreign_unique']);

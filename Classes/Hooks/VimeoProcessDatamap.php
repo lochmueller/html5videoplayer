@@ -2,6 +2,7 @@
 
 namespace HVP\Html5videoplayer\Hooks;
 
+use TYPO3\CMS\Core\Http\RequestFactory;
 use \TYPO3\CMS\Core\Database\ConnectionPool;
 use \TYPO3\CMS\Core\Resource\ResourceFactory;
 use \TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -54,7 +55,7 @@ class VimeoProcessDatamap
                     $matches
                 )) {
                     $videoId = $matches[3];
-                    $url = GeneralUtility::getUrl('https://vimeo.com/api/v2/video/' . $videoId . '.php');
+                    $url = GeneralUtility::makeInstance(RequestFactory::class)->request('https://vimeo.com/api/v2/video/' . $videoId . '.php')->getBody()->getContents();
                     $videoData = unserialize($url, ['allowed_classes' => true]);
 
                     if (is_array($videoData)) {
@@ -70,7 +71,7 @@ class VimeoProcessDatamap
                         }
 
                         if (!isset($data['posterimage']) || trim($data['posterimage']) === '') {
-                            $resourceFactory = ResourceFactory::getInstance();
+                            $resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
                             $folder = $resourceFactory->retrieveFileOrFolderObject($this->getUploadFolder());
                             $thumbnailData = GeneralUtility::getUrl($videoData['thumbnail_large']);
                             $file = $folder->createFile(basename($videoData['thumbnail_large']) . '.jpg');
@@ -98,7 +99,7 @@ class VimeoProcessDatamap
         $arguments = [
             $this->defaultUploadFolder,
         ];
-        $arguments = $dispatcher->dispatch(__CLASS__, __METHOD__, $arguments);
+        $arguments = $dispatcher->dispatch(self::class, __METHOD__, $arguments);
         return $arguments[0];
     }
 }

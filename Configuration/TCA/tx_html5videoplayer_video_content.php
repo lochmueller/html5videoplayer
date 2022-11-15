@@ -1,8 +1,5 @@
 <?php
 
-if (!defined('TYPO3_MODE')) {
-    die('Access denied.');
-}
 return [
     'ctrl' => [
         'label' => 'Video/Content Relation',
@@ -10,9 +7,6 @@ return [
         'hideTable' => true,
         'sortby' => 'sorting',
         'iconfile' => 'EXT:html5videoplayer/Resources/Public/Icons/VideoContent.png',
-    ],
-    'interface' => [
-        'showRecordFieldList' => 'content_uid,video_uid'
     ],
     'columns' => [
         'content_uid' => [

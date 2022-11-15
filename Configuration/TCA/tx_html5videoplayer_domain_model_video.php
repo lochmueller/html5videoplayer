@@ -1,8 +1,6 @@
 <?php
 
-if (!defined('TYPO3_MODE')) {
-    die('Access denied.');
-}
+use HVP\Html5videoplayer\Div;
 
 $tca = [
     'ctrl' => [
@@ -16,7 +14,6 @@ $tca = [
         'transOrigDiffSourceField' => 'l10n_diffsource',
         'sortby' => 'sorting',
         'delete' => 'deleted',
-        'dividers2tabs' => true,
         'enablecolumns' => [
             'disabled' => 'hidden',
             'starttime' => 'starttime',
@@ -348,7 +345,7 @@ $tca = [
     ]
 ];
 
-if (\HVP\Html5videoplayer\Div::featureEnable('vimeo')) {
+if (Div::featureEnable('vimeo')) {
     $tca['types']['0'] = ['showitem' => '--div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xlf:video,title,--palette--;;1,width, height,posterimage, mp4source, webmsource, oggsource, youtube,vimeo,--div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xlf:configurations, downloadlinks, supportvideojs, preloadvideo, autoplayvideo, mutevideo, loopvideo, video_starttime, controlsvideo, --div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xlf:description, description'];
 }
 

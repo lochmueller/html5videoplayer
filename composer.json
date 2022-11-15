@@ -21,11 +21,8 @@
     }
   ],
   "require": {
-    "php": ">=7.1",
-    "typo3/cms-core": "^9.5 || ^10.4"
-  },
-  "suggest": {
-    "friendsoftypo3/mediace": "Needed to get MediaWizard working to get media uri"
+    "php": "^7.4||^8.0",
+    "typo3/cms-core": "^10.4||^11.5"
   },
   "replace": {
     "typo3-ter/html5videoplayer": "self.version"
@@ -36,14 +33,16 @@
     "issues": "https://github.com/lochmueller/html5videoplayer/issues"
   },
   "require-dev": {
-    "namelesscoder/typo3-repository-client": "2.0.0",
-    "phpunit/phpunit": "~4.8.0",
-    "squizlabs/php_codesniffer": "^2.6",
-    "phpmd/phpmd": "^2.4"
+    "typo3/testing-framework": "^6.16",
+    "ssch/typo3-rector": "^1.0"
   },
   "config": {
     "vendor-dir": ".Build/vendor",
-    "bin-dir": ".Build/bin"
+    "bin-dir": ".Build/bin",
+    "allow-plugins": {
+      "typo3/class-alias-loader": true,
+      "typo3/cms-composer-installers": true
+    }
   },
   "extra": {
     "typo3/cms": {

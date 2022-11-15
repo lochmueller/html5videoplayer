@@ -10,6 +10,8 @@
 
 namespace HVP\Html5videoplayer\Controller;
 
+use HVP\Html5videoplayer\Domain\Repository\VideoRepository;
+use TYPO3\CMS\Extbase\Annotation\Inject;
 use \HVP\Html5videoplayer\Div;
 use \HVP\Html5videoplayer\Domain\Model\Video;
 use \TYPO3\CMS\Core\Database\ConnectionPool;
@@ -20,7 +22,6 @@ use TYPO3\CMS\Core\Utility\PathUtility;
 use \TYPO3\CMS\Extbase\Configuration\FrontendConfigurationManager;
 use \TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
-use \TYPO3\CMS\Extbase\Mvc\Web\Response;
 use \TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 use \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException;
 use \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException;
@@ -39,13 +40,13 @@ class VideoplayerController extends ActionController
     /**
      * The current Video JS Version
      */
-    const VIDEO_JS_VERSION = '6.2.8';
+    public const VIDEO_JS_VERSION = '6.2.8';
 
     /**
      * The video repository
      *
-     * @var \HVP\Html5videoplayer\Domain\Repository\VideoRepository
-     * @TYPO3\CMS\Extbase\Annotation\Inject
+     * @var VideoRepository
+     * @Inject
      */
     protected $videoRepository;
 
@@ -108,7 +109,7 @@ class VideoplayerController extends ActionController
         ];
 
         $variables = $this->getSignalSlotDispatcher()
-            ->dispatch(__CLASS__, __METHOD__, $variables);
+            ->dispatch(self::class, __METHOD__, $variables);
         $this->view->assignMultiple($variables);
     }
 
@@ -182,7 +183,7 @@ class VideoplayerController extends ActionController
         ];
 
         $variables = $this->getSignalSlotDispatcher()
-            ->dispatch(__CLASS__, __METHOD__, $variables);
+            ->dispatch(self::class, __METHOD__, $variables);
         $this->view->assignMultiple($variables);
     }
 
@@ -217,7 +218,7 @@ class VideoplayerController extends ActionController
         ];
 
         $variables = $this->getSignalSlotDispatcher()
-            ->dispatch(__CLASS__, __METHOD__, $variables);
+            ->dispatch(self::class, __METHOD__, $variables);
         $this->view->assignMultiple($variables);
     }
 
@@ -308,7 +309,7 @@ class VideoplayerController extends ActionController
      */
     protected function addHeader($header): void
     {
-        /** @var Response $response */
+        /** @var \TYPO3\CMS\Extbase\Mvc\Response $response */
         $response = &$this->response;
         $response->addAdditionalHeaderData($header);
     }

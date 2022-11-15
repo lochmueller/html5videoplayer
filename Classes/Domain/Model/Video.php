@@ -25,6 +25,7 @@
 
 namespace HVP\Html5videoplayer\Domain\Model;
 
+use TYPO3\CMS\Extbase\Annotation\Validate;
 use \FoT3\Mediace\MediaWizard\MediaWizardProviderManager;
 use \HVP\Html5videoplayer\Div;
 use \TYPO3\CMS\Core\Core\Environment;
@@ -49,7 +50,7 @@ class Video extends AbstractEntity
      * The title of the Video
      *
      * @var string
-     * @TYPO3\CMS\Extbase\Annotation\Validate("StringLength", options={"minimum": 1})
+     * @Validate("StringLength", options={"minimum" = 1})
      */
     protected $title;
 
@@ -497,7 +498,7 @@ class Video extends AbstractEntity
             $fileUid = substr($media, 5);
 
             if (MathUtility::canBeInterpretedAsInteger($fileUid)) {
-                $fileObject = ResourceFactory::getInstance()
+                $fileObject = GeneralUtility::makeInstance(ResourceFactory::class)
                     ->getFileObject($fileUid);
 
                 if ($fileObject instanceof FileInterface) {
@@ -545,7 +546,7 @@ class Video extends AbstractEntity
             return $media;
         }
 
-        throw new \RuntimeException('Could not fetch the URL in the right way', 12367238462384);
+        throw new \RuntimeException('Could not fetch the URL in the right way', 12_367_238_462_384);
     }
 
     /**

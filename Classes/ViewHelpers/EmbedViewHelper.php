@@ -18,18 +18,18 @@ class EmbedViewHelper extends AbstractViewHelper
     /**
      * Just render everything.
      *
-     * @param string  $value
-     * @param integer $videowidth
-     * @param integer $videoheight
-     * @param string  $src
-     * @param string  $imgfallback
-     * @param boolean $autoplay
      *
      * @return string
      */
-    public function render($value, $videowidth, $videoheight, $src, $imgfallback = null, $autoplay = false)
+    public function render()
     {
-
+        $configuration = [];
+        $value = $this->arguments['value'];
+        $videowidth = $this->arguments['videowidth'];
+        $videoheight = $this->arguments['videoheight'];
+        $src = $this->arguments['src'];
+        $imgfallback = $this->arguments['imgfallback'];
+        $autoplay = $this->arguments['autoplay'];
         if ($imgfallback != null) {
             $configuration['playlist'] = ['###IMAGE###'];
         }
@@ -38,15 +38,23 @@ class EmbedViewHelper extends AbstractViewHelper
             'autoPlay'      => $autoplay,
             'autoBuffering' => true,
         ];
-
         $json = json_encode($configuration);
-
         if (substr($value, 0, strlen('http')) !== "http") {
             $value = GeneralUtility::getIndpEnv('TYPO3_SITE_URL') . $value;
         }
         $json = str_replace('###URL###', $value, $json);
         $json = str_replace('###IMAGE###', $imgfallback, $json);
-
         return '<embed type="application/x-shockwave-flash" width="' . $videowidth . '" height="' . $videoheight . '" src="' . $src . '" flashvars=\'config=' . $json . '\' allowfullscreen="true" />';
+    }
+
+    public function initializeArguments(): void
+    {
+        parent::initializeArguments();
+        $this->registerArgument('value', 'string', '', true);
+        $this->registerArgument('videowidth', 'integer', '', true);
+        $this->registerArgument('videoheight', 'integer', '', true);
+        $this->registerArgument('src', 'string', '', true);
+        $this->registerArgument('imgfallback', 'string', '', false);
+        $this->registerArgument('autoplay', 'boolean', '', false, false);
     }
 }

@@ -18,14 +18,15 @@ class FlashparamViewHelper extends AbstractViewHelper
     /**
      * Just render everything.
      *
-     * @param string  $value
-     * @param string  $imgfallback
-     * @param boolean $autoplay
      *
      * @return string
      */
-    public function render($value, $imgfallback = "", $autoplay = false)
+    public function render()
     {
+        $configuration = [];
+        $value = $this->arguments['value'];
+        $imgfallback = $this->arguments['imgfallback'];
+        $autoplay = $this->arguments['autoplay'];
         if ($imgfallback != "") {
             $configuration['playlist'] = ['###IMAGE###'];
         }
@@ -34,20 +35,23 @@ class FlashparamViewHelper extends AbstractViewHelper
             'autoPlay'      => $autoplay,
             'autoBuffering' => true,
         ];
-
         if (substr($value, 0, strlen('http')) != "http") {
             $value = GeneralUtility::getIndpEnv('TYPO3_SITE_URL') . $value;
         }
-
         if (substr($imgfallback, 0, strlen('http')) !== "http") {
             $imgfallback = GeneralUtility::getIndpEnv('TYPO3_SITE_URL') . $imgfallback;
         }
-
         $json = json_encode($configuration);
         $json = str_replace('###IMAGE###', $imgfallback, $json);
         $json = str_replace('###URL###', $value, $json);
-
-
         return '<param name="flashvars" value=\'config=' . $json . '\' />';
+    }
+
+    public function initializeArguments(): void
+    {
+        parent::initializeArguments();
+        $this->registerArgument('value', 'string', '', true);
+        $this->registerArgument('imgfallback', 'string', '', false, '');
+        $this->registerArgument('autoplay', 'boolean', '', false, false);
     }
 }

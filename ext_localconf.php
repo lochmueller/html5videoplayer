@@ -2,10 +2,10 @@
 defined('TYPO3_MODE') || die();
 
 (static function ($extKey = 'html5videoplayer') {
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin('HVP.html5videoplayer', 'PiVideoplayer', [
-        'Videoplayer' => 'list,overview,detail',
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin('Html5videoplayer', 'PiVideoplayer', [
+        \HVP\Html5videoplayer\Controller\VideoplayerController::class => 'list,overview,detail',
     ], [
-        'Videoplayer' => 'overview'
+        \HVP\Html5videoplayer\Controller\VideoplayerController::class => 'overview'
     ]);
 
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][$extKey . '_div'] = \HVP\Html5videoplayer\Div::class;
