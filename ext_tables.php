@@ -1,5 +1,6 @@
-<?php /** @noinspection PhpFullyQualifiedNameUsageInspection */
-defined('TYPO3_MODE') || die();
+<?php
+
+defined('TYPO3') || defined('TYPO3_MODE') || die();
 
 (static function ($extKey = 'html5videoplayer') {
 

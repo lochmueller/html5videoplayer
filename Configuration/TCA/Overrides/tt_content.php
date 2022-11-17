@@ -4,7 +4,7 @@ use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use HVP\Html5videoplayer\Div;
 
-defined('TYPO3_MODE') || die();
+defined('TYPO3') || defined('TYPO3_MODE') || die();
 
 (static function ($extKey = 'html5videoplayer') {
     ExtensionUtility::registerPlugin($extKey, 'PiVideoplayer', 'Videoplayer');

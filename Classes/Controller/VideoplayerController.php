@@ -1,17 +1,9 @@
 <?php
-/**
- * Html5VideoPlayer Controller
- *
- * @category   Extension
- * @package    Html5videoplayer
- * @subpackage Controller
- * @author     Tim Lochmüller <tim@fruit-lab.de>
- */
 
 namespace HVP\Html5videoplayer\Controller;
 
 use HVP\Html5videoplayer\Domain\Repository\VideoRepository;
-use TYPO3\CMS\Extbase\Annotation\Inject;
+use TYPO3\CMS\Core\Page\PageRenderer;
 use \HVP\Html5videoplayer\Div;
 use \HVP\Html5videoplayer\Domain\Model\Video;
 use \TYPO3\CMS\Core\Database\ConnectionPool;
@@ -27,13 +19,6 @@ use \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException;
 use \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException;
 use \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
-/**
- * Abstract Command Controller
- *
- * @package    Html5videoplayer
- * @subpackage Controller
- * @author     Tim Lochmüller <tim@fruit-lab.de>
- */
 class VideoplayerController extends ActionController
 {
 
@@ -46,7 +31,6 @@ class VideoplayerController extends ActionController
      * The video repository
      *
      * @var VideoRepository
-     * @Inject
      */
     protected $videoRepository;
 
@@ -91,6 +75,11 @@ class VideoplayerController extends ActionController
         if (!@is_array($typoScript['plugin.']['tx_html5videoplayer.']['view.'])) {
             die('HTML5 Video Player: You have to include the static extension Template of the html5videoplayer.');
         }
+    }
+
+    public function injectVideoRepository(VideoRepository $videoRepository)
+    {
+        $this->videoRepository = $videoRepository;
     }
 
     /**
@@ -149,7 +138,7 @@ class VideoplayerController extends ActionController
     /**
      * Render the overview action
      *
-     * @return void
+     *
      * @throws StopActionException
      * @throws InvalidSlotException
      * @throws InvalidSlotReturnException
@@ -309,9 +298,8 @@ class VideoplayerController extends ActionController
      */
     protected function addHeader($header): void
     {
-        /** @var \TYPO3\CMS\Extbase\Mvc\Response $response */
-        $response = &$this->response;
-        $response->addAdditionalHeaderData($header);
+        $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+        $pageRenderer->addHeaderData($header);
     }
 
     /**

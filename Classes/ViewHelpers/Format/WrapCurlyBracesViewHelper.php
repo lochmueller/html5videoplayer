@@ -1,17 +1,9 @@
 <?php
-/**
- * WrapCurlyBracesViewHelper
- *
- * @author  Tim Lochmüller
- */
 
 namespace HVP\Html5videoplayer\ViewHelpers\Format;
 
 use \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
-/**
- * WrapCurlyBracesViewHelper
- */
 class WrapCurlyBracesViewHelper extends AbstractViewHelper
 {
 

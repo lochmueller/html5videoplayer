@@ -10,11 +10,6 @@ use \TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 use \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException;
 use \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException;
 
-/**
- * Class VimeoProcessDatamap
- *
- * @package HVP\Html5videoplayer\Hooks
- */
 class VimeoProcessDatamap
 {
 

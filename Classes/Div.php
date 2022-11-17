@@ -1,7 +1,4 @@
 <?php
-/**
- * Class Tx_Html5videoplayer_Div
- */
 
 namespace HVP\Html5videoplayer;
 
@@ -12,9 +9,6 @@ use \TYPO3\CMS\Core\Database\ConnectionPool;
 use \TYPO3\CMS\Core\DataHandling\DataHandler;
 use \TYPO3\CMS\Core\Utility\GeneralUtility;
 
-/**
- * Class Tx_Html5videoplayer_Div
- */
 class Div
 {
 

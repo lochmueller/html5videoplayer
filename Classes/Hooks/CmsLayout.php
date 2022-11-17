@@ -5,9 +5,6 @@ namespace HVP\Html5videoplayer\Hooks;
 use \TYPO3\CMS\Core\Database\ConnectionPool;
 use \TYPO3\CMS\Core\Utility\GeneralUtility;
 
-/**
- * Render CMS Layout
- */
 class CmsLayout
 {
 

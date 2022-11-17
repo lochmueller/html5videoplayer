@@ -1,6 +1,10 @@
 <?php
 
 use HVP\Html5videoplayer\Div;
+use TYPO3\CMS\Core\Information\Typo3Version;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
+$typo3Version = GeneralUtility::makeInstance(Typo3Version::class);
 
 $tca = [
     'ctrl' => [
@@ -22,23 +26,22 @@ $tca = [
         ],
         'iconfile' => 'EXT:html5videoplayer/Resources/Public/Icons/Video.png',
     ],
-    'interface' => [
-        'showRecordFieldList' => 'sys_language_uid,l10n_parent,l10n_diffsource,hidden,starttime,endtime,fe_group,title,posterimage,mp4source,webmsource,oggsource,height,width,downloadlinks,supportvideojs,preloadvideo,autoplayvideo, mutevideo,loopvideo'
-    ],
     'columns' => [
         'sys_language_uid' => [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
-            'config' => [
-                'type' => 'select',
-                'renderType' => 'selectSingle',
-                'foreign_table' => 'sys_language',
-                'foreign_table_where' => 'ORDER BY sys_language.title',
-                'items' => [
-                    ['LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages', -1],
-                    ['LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.default_value', 0]
-                ],
-            ]
+            'config' => $typo3Version->getMajorVersion() === 11 ?
+                ['type' => 'language'] :
+                [
+                    'type' => 'select',
+                    'renderType' => 'selectSingle',
+                    'foreign_table' => 'sys_language',
+                    'foreign_table_where' => 'ORDER BY sys_language.title',
+                    'items' => [
+                        ['LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages', -1],
+                        ['LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.default_value', 0]
+                    ],
+                ]
         ],
         'l10n_parent' => [
             'displayCond' => 'FIELD:sys_language_uid:>:0',
