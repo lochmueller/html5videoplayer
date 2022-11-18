@@ -340,16 +340,32 @@ $tca = [
         ],
     ],
     'types' => [
-        '0' => ['showitem' => '--div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xlf:video,title,--palette--;;1,width, height,posterimage, mp4source, webmsource, oggsource, youtube,--div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xlf:configurations, downloadlinks, supportvideojs, preloadvideo, autoplayvideo, mutevideo, loopvideo, video_starttime, controlsvideo, --div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xlf:description, description']
-
+        '0' => [
+            'showitem' => '--div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xlf:video,title,--palette--;;dimensions,posterimage, mp4source, webmsource, oggsource, youtube, --div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xlf:configurations, downloadlinks, supportvideojs, preloadvideo, autoplayvideo, mutevideo, loopvideo, video_starttime, controlsvideo, --div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xlf:description, description, --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language, --palette--;;language, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.access,--palette--;;visibility, --palette--;;access'
+        ],
     ],
     'palettes' => [
-        '1' => ['showitem' => 'hidden,sys_language_uid,l10n_parent,l10n_diffsource,starttime,endtime,fe_group'],
-    ]
+        'dimensions' => [
+            'label' => 'Dimensions',
+            'showitem' => 'width, height'
+        ],
+        'language' => [
+            'label' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.language',
+            'showitem' => 'sys_language_uid,l10n_parent,l10n_diffsource'
+        ],
+        'access' => [
+            'label' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.access',
+            'showitem' => 'starttime,endtime,--linebreak--,fe_group',
+        ],
+        'visibility' => [
+            'label' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.visibility',
+            'showitem' => 'hidden'
+        ],
+    ],
 ];
 
 if (Div::featureEnable('vimeo')) {
-    $tca['types']['0'] = ['showitem' => '--div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xlf:video,title,--palette--;;1,width, height,posterimage, mp4source, webmsource, oggsource, youtube,vimeo,--div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xlf:configurations, downloadlinks, supportvideojs, preloadvideo, autoplayvideo, mutevideo, loopvideo, video_starttime, controlsvideo, --div--;LLL:EXT:html5videoplayer/Resources/Private/Language/locallang.xlf:description, description'];
+    $tca['types']['0']['showitem'] = str_replace('youtube,', 'youtube,vimeo,', $tca['types']['0']['showitem']);
 }
 
 return $tca;
