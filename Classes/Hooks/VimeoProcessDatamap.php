@@ -35,6 +35,7 @@ class VimeoProcessDatamap
             if ($status === 'update') {
                 $table = 'tx_html5videoplayer_domain_model_video';
                 $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
+                $queryBuilder->getRestrictions()->removeAll();
                 $res = $queryBuilder->select('*')
                     ->from($table, 'video')
                     ->where($queryBuilder->expr()->eq('video.uid',
