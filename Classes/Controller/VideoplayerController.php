@@ -3,36 +3,27 @@
 namespace HVP\Html5videoplayer\Controller;
 
 use HVP\Html5videoplayer\Domain\Repository\VideoRepository;
+use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Http\PropagateResponseException;
+use TYPO3\CMS\Core\Page\AssetCollector;
 use TYPO3\CMS\Core\Page\PageRenderer;
-use \HVP\Html5videoplayer\Div;
-use \HVP\Html5videoplayer\Domain\Model\Video;
-use \TYPO3\CMS\Core\Database\ConnectionPool;
-use \TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use \TYPO3\CMS\Core\Utility\GeneralUtility;
-use \TYPO3\CMS\Core\Utility\HttpUtility;
-use TYPO3\CMS\Core\Utility\PathUtility;
-use \TYPO3\CMS\Extbase\Configuration\FrontendConfigurationManager;
-use \TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
-use \TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
-use \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException;
-use \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException;
-use \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
+use HVP\Html5videoplayer\Div;
+use HVP\Html5videoplayer\Domain\Model\Video;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\FrontendConfigurationManager;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
+use TYPO3\CMS\Extbase\Http\ForwardResponse;
+
 
 class VideoplayerController extends ActionController
 {
-
     /**
      * The current Video JS Version
      */
     public const VIDEO_JS_VERSION = '6.2.8';
-
-    /**
-     * The video repository
-     *
-     * @var VideoRepository
-     */
-    protected $videoRepository;
 
     /**
      * Check if the header is included
@@ -47,6 +38,13 @@ class VideoplayerController extends ActionController
      * @var array
      */
     protected $configuration = [];
+
+    public function __construct(
+        private readonly AssetCollector $assetCollector,
+        private readonly VideoRepository $videoRepository,
+    )
+    {
+    }
 
     /**
      * Init the actions
@@ -77,19 +75,7 @@ class VideoplayerController extends ActionController
         }
     }
 
-    public function injectVideoRepository(VideoRepository $videoRepository)
-    {
-        $this->videoRepository = $videoRepository;
-    }
-
-    /**
-     * control the list action
-     *
-     * @return void
-     * @throws InvalidSlotException
-     * @throws InvalidSlotReturnException
-     */
-    public function listAction(): void
+    public function listAction(): ResponseInterface
     {
         $this->loadHeaderData();
 
@@ -97,9 +83,8 @@ class VideoplayerController extends ActionController
             'videos' => $this->getCurrentVideos()
         ];
 
-        $variables = $this->getSignalSlotDispatcher()
-            ->dispatch(self::class, __METHOD__, $variables);
         $this->view->assignMultiple($variables);
+        return $this->htmlResponse();
     }
 
     /**
@@ -135,15 +120,7 @@ class VideoplayerController extends ActionController
         return $videos;
     }
 
-    /**
-     * Render the overview action
-     *
-     *
-     * @throws StopActionException
-     * @throws InvalidSlotException
-     * @throws InvalidSlotReturnException
-     */
-    public function overviewAction(): void
+    public function overviewAction(): ResponseInterface
     {
         $videos = $this->getCurrentVideos();
 
@@ -161,9 +138,11 @@ class VideoplayerController extends ActionController
             if ($this->settings['skipOverviewMode'] == 'forward') {
                 $this->getTyposcriptFrontendController()
                     ->set_no_cache('HTML5VideoPlayer is in forward mode in the overview');
-                $this->forward('detail', null, null, $arguments);
+                return (new ForwardResponse('detail'))->withArguments($arguments);
             } else {
-                HttpUtility::redirect($uri);
+                $responseFactory = GeneralUtility::makeInstance(ResponseFactoryInterface::class);
+                $response = $responseFactory->createResponse()->withAddedHeader('location', $uri);
+                throw new PropagateResponseException($response);
             }
         }
 
@@ -171,20 +150,11 @@ class VideoplayerController extends ActionController
             'videos' => $videos
         ];
 
-        $variables = $this->getSignalSlotDispatcher()
-            ->dispatch(self::class, __METHOD__, $variables);
         $this->view->assignMultiple($variables);
+        return $this->htmlResponse();
     }
 
-    /**
-     * Render the detail action
-     *
-     * @param Video $video
-     * @return void
-     * @throws InvalidSlotException
-     * @throws InvalidSlotReturnException
-     */
-    public function detailAction(Video $video): void
+    public function detailAction(Video $video): ResponseInterface
     {
         $this->loadHeaderData();
         $videos = $this->getCurrentVideos();
@@ -206,19 +176,8 @@ class VideoplayerController extends ActionController
             'currentVideo' => $video
         ];
 
-        $variables = $this->getSignalSlotDispatcher()
-            ->dispatch(self::class, __METHOD__, $variables);
         $this->view->assignMultiple($variables);
-    }
-
-    /**
-     * Get a signal slot dispatcher
-     *
-     * @return Dispatcher
-     */
-    protected function getSignalSlotDispatcher(): Dispatcher
-    {
-        return $this->objectManager->get(Dispatcher::class);
+        return $this->htmlResponse();
     }
 
     /**
@@ -250,56 +209,27 @@ class VideoplayerController extends ActionController
     protected function loadHeaderData(): void
     {
         if (!self::$includeHeader && $this->settings['skipHtmlHeaderInformation'] != 1) {
-            $folder = $this->getResourceFolder();
+            $folder = $this->settings['resourceFolder'];
 
             $css = $folder . 'video-js-' . self::VIDEO_JS_VERSION . '/video-js.min.css';
             $javaScript = $folder . 'video-js-' . self::VIDEO_JS_VERSION . '/video.min.js';
+            $javaScriptYouTube = $folder . 'videojs-youtube-2.6.0/dist/Youtube.min.js';
+            $javaScriptVimeo = $folder . 'videojs-vimeo-master-2017-09-11/dist/videojs-vimeo.min.js';
 
             if (isset($this->settings['videoJsCdn']) && $this->settings['videoJsCdn']) {
                 $css = '//vjs.zencdn.net/' . self::VIDEO_JS_VERSION . '/video-js.css';
                 $javaScript = '//vjs.zencdn.net/' . self::VIDEO_JS_VERSION . '/video.js';
             }
 
-            $this->addHeader('<link href="' . $css . '" type="text/css" rel="stylesheet" media="screen" />');
-            $this->addHeader('<script src="' . $javaScript . '" type="text/javascript"></script>');
-            $this->addHeader('<script src="' . $folder . 'videojs-youtube-2.6.0/dist/Youtube.min.js" type="text/javascript"></script>');
+            $this->assetCollector->addJavaScript('html5videoplayer_javascript', $javaScript);
+            $this->assetCollector->addJavaScript('html5videoplayer_javascript_youtube', $javaScriptYouTube);
+            $this->assetCollector->addStyleSheet('html5videoplayer_stylesheet', $css);
             if (Div::featureEnable('vimeo')) {
-                $this->addHeader('<script src="' . $folder . 'videojs-vimeo-master-2017-09-11/dist/videojs-vimeo.min.js" type="text/javascript"></script>');
+                $this->assetCollector->addJavaScript('html5videoplayer_javascript_vimeo', $javaScriptVimeo);
             }
         }
 
         self::$includeHeader = true;
-    }
-
-    /**
-     * Get the resource folder
-     *
-     * @return string
-     */
-    protected function getResourceFolder(): string
-    {
-        $folder = $this->settings['resourceFolder'];
-
-        if (strpos($folder, 'EXT:') === 0) {
-            [$extKey, $local] = explode('/', substr($folder, 4), 2);
-            $folder = '';
-            if (strcmp($extKey, '') && ExtensionManagementUtility::isLoaded($extKey) && strcmp($local, '')) {
-                $folder = PathUtility::stripPathSitePrefix(ExtensionManagementUtility::extPath($extKey)) . $local;
-            }
-        }
-        return $folder;
-    }
-
-    /**
-     * Add a HTML header
-     *
-     * @param string $header
-     * @return void
-     */
-    protected function addHeader($header): void
-    {
-        $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-        $pageRenderer->addHeaderData($header);
     }
 
     /**
@@ -319,8 +249,8 @@ class VideoplayerController extends ActionController
             ->from('tx_html5videoplayer_video_content')
             ->where(...$where)
             ->orderBy('sorting')
-            ->execute()
-            ->fetchAll();
+            ->executeQuery()
+            ->fetchAllAssociative();
         foreach ($rows as $row) {
             $uids[] = (int)$row['video_uid'];
         }
