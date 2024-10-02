@@ -6,34 +6,24 @@ use HVP\Html5videoplayer\Domain\Repository\VideoRepository;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\PropagateResponseException;
+use TYPO3\CMS\Core\Page\AssetCollector;
 use TYPO3\CMS\Core\Page\PageRenderer;
-use \HVP\Html5videoplayer\Div;
-use \HVP\Html5videoplayer\Domain\Model\Video;
-use \TYPO3\CMS\Core\Database\ConnectionPool;
-use \TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use \TYPO3\CMS\Core\Utility\GeneralUtility;
-use \TYPO3\CMS\Core\Utility\HttpUtility;
-use TYPO3\CMS\Core\Utility\PathUtility;
-use \TYPO3\CMS\Extbase\Configuration\FrontendConfigurationManager;
-use \TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
+use HVP\Html5videoplayer\Div;
+use HVP\Html5videoplayer\Domain\Model\Video;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\FrontendConfigurationManager;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 
 
 class VideoplayerController extends ActionController
 {
-
     /**
      * The current Video JS Version
      */
     public const VIDEO_JS_VERSION = '6.2.8';
-
-    /**
-     * The video repository
-     *
-     * @var VideoRepository
-     */
-    protected $videoRepository;
 
     /**
      * Check if the header is included
@@ -48,6 +38,13 @@ class VideoplayerController extends ActionController
      * @var array
      */
     protected $configuration = [];
+
+    public function __construct(
+        private readonly AssetCollector $assetCollector,
+        private readonly VideoRepository $videoRepository,
+    )
+    {
+    }
 
     /**
      * Init the actions
@@ -76,11 +73,6 @@ class VideoplayerController extends ActionController
         if (!@is_array($typoScript['plugin.']['tx_html5videoplayer.']['view.'])) {
             die('HTML5 Video Player: You have to include the static extension Template of the html5videoplayer.');
         }
-    }
-
-    public function injectVideoRepository(VideoRepository $videoRepository)
-    {
-        $this->videoRepository = $videoRepository;
     }
 
     public function listAction(): ResponseInterface
@@ -217,56 +209,27 @@ class VideoplayerController extends ActionController
     protected function loadHeaderData(): void
     {
         if (!self::$includeHeader && $this->settings['skipHtmlHeaderInformation'] != 1) {
-            $folder = $this->getResourceFolder();
+            $folder = $this->settings['resourceFolder'];
 
             $css = $folder . 'video-js-' . self::VIDEO_JS_VERSION . '/video-js.min.css';
             $javaScript = $folder . 'video-js-' . self::VIDEO_JS_VERSION . '/video.min.js';
+            $javaScriptYouTube = $folder . 'videojs-youtube-2.6.0/dist/Youtube.min.js';
+            $javaScriptVimeo = $folder . 'videojs-vimeo-master-2017-09-11/dist/videojs-vimeo.min.js';
 
             if (isset($this->settings['videoJsCdn']) && $this->settings['videoJsCdn']) {
                 $css = '//vjs.zencdn.net/' . self::VIDEO_JS_VERSION . '/video-js.css';
                 $javaScript = '//vjs.zencdn.net/' . self::VIDEO_JS_VERSION . '/video.js';
             }
 
-            $this->addHeader('<link href="' . $css . '" type="text/css" rel="stylesheet" media="screen" />');
-            $this->addHeader('<script src="' . $javaScript . '" type="text/javascript"></script>');
-            $this->addHeader('<script src="' . $folder . 'videojs-youtube-2.6.0/dist/Youtube.min.js" type="text/javascript"></script>');
+            $this->assetCollector->addJavaScript('html5videoplayer_javascript', $javaScript);
+            $this->assetCollector->addJavaScript('html5videoplayer_javascript_youtube', $javaScriptYouTube);
+            $this->assetCollector->addStyleSheet('html5videoplayer_stylesheet', $css);
             if (Div::featureEnable('vimeo')) {
-                $this->addHeader('<script src="' . $folder . 'videojs-vimeo-master-2017-09-11/dist/videojs-vimeo.min.js" type="text/javascript"></script>');
+                $this->assetCollector->addJavaScript('html5videoplayer_javascript_vimeo', $javaScriptVimeo);
             }
         }
 
         self::$includeHeader = true;
-    }
-
-    /**
-     * Get the resource folder
-     *
-     * @return string
-     */
-    protected function getResourceFolder(): string
-    {
-        $folder = $this->settings['resourceFolder'];
-
-        if (strpos($folder, 'EXT:') === 0) {
-            [$extKey, $local] = explode('/', substr($folder, 4), 2);
-            $folder = '';
-            if (strcmp($extKey, '') && ExtensionManagementUtility::isLoaded($extKey) && strcmp($local, '')) {
-                $folder = PathUtility::stripPathSitePrefix(ExtensionManagementUtility::extPath($extKey)) . $local;
-            }
-        }
-        return $folder;
-    }
-
-    /**
-     * Add a HTML header
-     *
-     * @param string $header
-     * @return void
-     */
-    protected function addHeader($header): void
-    {
-        $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-        $pageRenderer->addHeaderData($header);
     }
 
     /**
@@ -286,8 +249,8 @@ class VideoplayerController extends ActionController
             ->from('tx_html5videoplayer_video_content')
             ->where(...$where)
             ->orderBy('sorting')
-            ->execute()
-            ->fetchAll();
+            ->executeQuery()
+            ->fetchAllAssociative();
         foreach ($rows as $row) {
             $uids[] = (int)$row['video_uid'];
         }
