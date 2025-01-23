@@ -3,6 +3,9 @@
 namespace HVP\Html5videoplayer\Controller;
 
 use HVP\Html5videoplayer\Domain\Repository\VideoRepository;
+use HVP\Html5videoplayer\Event\DetailActionVariablesEvent;
+use HVP\Html5videoplayer\Event\ListActionVariablesEvent;
+use HVP\Html5videoplayer\Event\OverviewActionVariablesEvent;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\PropagateResponseException;
@@ -40,8 +43,8 @@ class VideoplayerController extends ActionController
     protected $configuration = [];
 
     public function __construct(
-        private readonly AssetCollector $assetCollector,
-        private readonly VideoRepository $videoRepository,
+        protected AssetCollector $assetCollector,
+        protected VideoRepository $videoRepository,
     )
     {
     }
@@ -83,7 +86,9 @@ class VideoplayerController extends ActionController
             'videos' => $this->getCurrentVideos()
         ];
 
-        $this->view->assignMultiple($variables);
+        $event = $this->eventDispatcher->dispatch(new ListActionVariablesEvent($variables));
+
+        $this->view->assignMultiple($event->variables);
         return $this->htmlResponse();
     }
 
@@ -150,7 +155,9 @@ class VideoplayerController extends ActionController
             'videos' => $videos
         ];
 
-        $this->view->assignMultiple($variables);
+        $event = $this->eventDispatcher->dispatch(new OverviewActionVariablesEvent($variables));
+
+        $this->view->assignMultiple($event->variables);
         return $this->htmlResponse();
     }
 
@@ -176,7 +183,9 @@ class VideoplayerController extends ActionController
             'currentVideo' => $video
         ];
 
-        $this->view->assignMultiple($variables);
+        $event = $this->eventDispatcher->dispatch(new DetailActionVariablesEvent($variables));
+
+        $this->view->assignMultiple($event->variables);
         return $this->htmlResponse();
     }
 
